@@ -32,22 +32,6 @@
 			<?php
 				$sql = "SELECT DISTINCT prodCat FROM products";
 				$result = mysqli_query($conn, $sql);
-
-				// echo "<div class='p-2 dropdown bd-highlight' style='margin-left: 50px;'>";
-				// echo "<form id='category' action='products.php' method='get'>";
-				// echo "<select name='category' onchange='submitCategory()'>";
-				// echo "<option value=''>Select Category</option>";
-				// while($row = mysqli_fetch_assoc($result)){
-				// 		if($_GET['category'] == $row['prodCat']){
-				// 			echo "<option value='" . $row["prodCat"] . "' selected>" . ucfirst(strtolower($row["prodCat"])) . "</option>";	
-				// 		}
-				// 	else{
-				// 		echo "<option value='" . $row["prodCat"] . "'>" . ucfirst(strtolower($row["prodCat"])) . "</option>";
-				// 	}
-				// }
-				// echo "</select>";
-				// echo "</form>";
-				// echo "</div>";
 			?>
 		</div>
 		

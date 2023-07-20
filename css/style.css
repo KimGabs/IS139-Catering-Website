@@ -31,7 +31,18 @@ main{
 
 header {
   background-color: #242424;
-  color: #fef7ec;
+  color: #242424;
+}
+
+.announcement-bar {
+  background-color: #fcfcfc;
+  border-bottom: 1px solid #fff42c;
+  padding-top: 0.4rem;
+  text-align: center;
+}
+
+.announcement-bar p{
+  margin-bottom: 0.4rem;
 }
 
 .logo img {
