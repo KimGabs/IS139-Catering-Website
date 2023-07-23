@@ -109,7 +109,7 @@ function loginUser($conn, $username, $pwd) {
     $checkPwd =password_verify($pwd, $pwdHashed);
 
     if($checkPwd === false){
-        header("location: ../PHP/public/entry/login.php?error=wronglogin");
+        header("location: ../PHP/public/entry/login.php?error=wrongPassword");
         exit();  
     }
     else if($checkPwd === true){
@@ -119,7 +119,7 @@ function loginUser($conn, $username, $pwd) {
         $_SESSION["userName"] = $uidExists["usersName"];
         $_SESSION["userType"] = $uidExists["user_type"];
         $_SESSION["userType"] = $uidExists["user_type"];
-        header("location: ../PHP/index.php");
+        header("location: ../PHP/admin/manageOrders.php");
         exit();   
     }
 }

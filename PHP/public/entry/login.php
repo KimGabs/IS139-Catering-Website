@@ -6,7 +6,7 @@
     }
 ?>
 	<main>
-		<section class="signup-form">
+		<section class="signup-form mt-3">
             <h1>Login</h1>
             <div class="signup-form-2">
                 <form action="../../../includes/login.inc.php" method="post">
@@ -22,12 +22,10 @@
                     }
                     else if ($_GET["error"] == "wronglogin"){
                         echo "<p>Incorrect username or password!</p>";
+                        echo "<p>Only admins can log in!</p>";
                     }
                 }
             ?>
-            <div>
-                <a href="register.php">Don't have an account?</a>
-            </div>
     </section>
 	</main>
 <?php

@@ -16,10 +16,10 @@
   /* Style for dropdown content */
   .dropdown-content {
     display: none;
-    position: absolute;
+    position: fixed;
     overflow: hidden;
-    z-index: 2;
-    right: 0;
+    z-index: 2 !important;
+    right: auto;
     min-width: 200px;
     margin-top: 0px;
     background-color: #fff;

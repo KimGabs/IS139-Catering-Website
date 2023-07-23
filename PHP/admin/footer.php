@@ -2,7 +2,6 @@
 <footer>
 	<div class="row footer" style="margin-top: 20px;">
 		<div class="col"><a href="../public/others/aboutUs.php">About Us</a></div>
-		<div class="col"><a href="../public/others/rne.php">Returns and Exchange</a></div>
 		<div class="col"><a href="../public/others/termsAndCondition.php">Terms & Condition</a></div>
 	</div>
 	<div class="row footer" style="margin-top: 10px;">

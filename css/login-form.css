@@ -15,11 +15,11 @@
 }
 
 .signup-form-2 input, .signup-form-2 input:focus{
-    border: 2px;
+    border: 1px solid gray;
     border-radius: 10px;
     font-family: Verdana;
     width: 300px;
-    height: 30px;
+    height: 40px;
     display: flex;
     font-size: 16px;
     margin-bottom: 15px;
@@ -40,7 +40,7 @@
 }
 
 .signup-form-2 button:hover{
-    background-color: #13a498;
+    background-color: #007BFF;
     color: white;
 }
 
