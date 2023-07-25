@@ -1,0 +1,142 @@
+/* Products Catalog */
+
+.catalog-container{
+    margin-bottom: 50px;
+  }
+
+  .row{
+    margin-top: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+    display: flex;
+    justify-content:flex-start;
+  }
+
+  .card-prods:nth-child(odd) .card-horizontal{
+    background-color: #4d4d4d;
+    color: white;
+  }
+
+  .card-prods:nth-child(even) .card-horizontal{
+    background-color: #efbf21;
+    color: white;
+  }
+
+  .card-horizontal {
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 16px;
+    text-shadow: 1px 1px gray;
+  }
+
+  .card-horizontal .card-img-responsive {
+    min-width: 220px;
+    max-width: 220px;
+    height: 15vw;
+    max-height: 15vw;
+    background-clip: content-box, padding-box;
+    background-color: white;
+    padding: 5px;
+    object-fit:cover;
+    border-radius: 15px;
+  }
+
+  .card h5{
+    font-weight: 600;
+  }
+  
+  .card-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+
+  .btn{
+    padding: 7px 30px;
+    width: 100%;
+    letter-spacing: 1px;
+    margin-top: 1.25rem;
+    font-weight: 500;
+    color: #282828;
+    background-color: white;
+    border: 0px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .card-prods:nth-child(even) .btn:hover{
+    background-color: #4d4d4d;
+    color: white;
+  }
+
+  .card-prods:nth-child(odd) .btn:hover{
+    background-color: #fed703;
+    color: #4d4d4d;
+  }
+
+  #modal-wishlist .btn{
+    background-color:  #13a498;
+    color: white;
+  }
+
+  #modal-wishlist .btn:hover{
+    background-color:  #15cbbc;
+    color: white;
+  }
+
+  .modal-body > .img-fluid, .modal-body > .btn{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fef7ec;
+}
+
+@media(max-width:991px){
+    .card-horizontal .card-img-responsive {
+      min-height: 26vw;
+      height: 27vw;
+      max-height: 28vw;
+    }
+    .catalog-container h5{
+      text-align: start;
+    }
+  }
+  
+  .dropdown button[type="button"]:hover, .btn-secondary:focus{
+    background-color: #fed703;
+    color: #4d4d4d;
+  }
+  
+  .show>.btn-secondary.dropdown-toggle {
+    background-color: #fed703;
+    color: #4d4d4d;
+  }
+  
+  .btn:focus .btn-check:focus+.btn-primary, .btn-primary:focus, button:focus:not(:focus-visible){
+    color: none;
+    outline: white;
+    border: white;
+  }
+  
+  .close-modal{
+    height: 38%;
+    font-size: 1.5em;
+    border: none;
+    background-color: none;
+    background: transparent;
+  }
+  
+  .dropdown select {
+    border-radius: 5px;
+    font-size: 1.1em;
+    padding: 0.4em 1.6em 0.4em 0.4em;
+    border: 1px solid white;
+    /* -webkit-box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }

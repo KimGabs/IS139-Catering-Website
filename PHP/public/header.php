@@ -23,6 +23,7 @@
 	<link rel="stylesheet" href="../../css/profile-dropdown.css">
 	<link rel="stylesheet" href="../../css/addProduct.css">
 	<link rel="stylesheet" href="../../css/cart.css">
+	<link rel="stylesheet" href="../../css/menu.css">
 	<link rel="stylesheet" href="../../css/aboutUs.css">
 	<link rel="stylesheet" href="../../css/contactUs.css">
 </head>

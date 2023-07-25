@@ -1,24 +1,24 @@
 <?php
 	include_once 'header.php';
+    include_once '../../includes/adminSidePanel.inc.php';
 ?>
 	<main>
-        <h1>Add Product</h1>
 		<section class="add-product-form">
+        <h1>Add Product</h1>
             <form action="../../includes/addProduct.inc.php" method="POST" enctype="multipart/form-data">
                 <div class="add-product-form-left">
                     <img id="preview" src="../../img/add-image.png" alt="your image" />
                     <input accept="image/*" type='file' id="image" name="image">
                 </div>
                 <div class="add-product-form-right">
-                    <label for="name">Product Name</label>
+                    <label for="name">Item Name</label>
                     <input type="text" name="name" id="name">
-                    <label for="name">Product Category</label>
+                    <label for="name">Item Category</label>
                     <input type="text" name="category" id="category">
-                    <label for="description">Product Description</label>
+                    <label for="description">Item Description</label>
                     <textarea name="desc" id="description"></textarea>
                     <div class="add-product-form-right-2">
                         <input type="number" name="price" id="price" min="0" step=".01" placeholder="Price">
-                        <input type="number" name="quantity" id="quantity" min="0" placeholder="Quantity">
                     </div>
                     <div class="error">
                     <?php
@@ -44,7 +44,7 @@
                         }
                     ?>
                     </div>
-                    <button type="submit" name="submit">Add Product</button>
+                    <button type="submit" name="submit">Submit Item</button>
                 </div>
             </form>
 		</section>

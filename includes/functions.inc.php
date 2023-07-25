@@ -127,9 +127,9 @@ function loginUser($conn, $username, $pwd) {
 
 // ADD PRODUCT Function //
 // Check if all fields are filled
-function emptyInputProduct($productName, $productDesc, $productCatergory, $productPrice, $productQuantity) {
+function emptyInputProduct($productName, $productDesc, $productCatergory, $productPrice) {
     $result;
-    if (empty($productName) || empty($productDesc) || empty($productCatergory) || empty($productPrice) || empty($productQuantity)) {
+    if (empty($productName) || empty($productDesc) || empty($productCatergory) || empty($productPrice)) {
         $result = true;
     }
     else {
@@ -205,9 +205,9 @@ function uploadProductImage($file) {
   }
 
 // Add product function
-function addProduct($conn, $productName, $productDesc, $productCatergory, $productPrice, $productQuantity, $imagePath){
+function addProduct($conn, $productName, $productDesc, $productCatergory, $productPrice, $imagePath){
     // prepare statement to insert data into products table
-    $sql = "INSERT INTO products (prodName, prodDesc, prodCat, prodPrice, prodQty, prodImage) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO products (prodName, prodDesc, prodCat, prodPrice, prodImage) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../PHP/admin/addProduct.php?error=stmtFailed");
@@ -215,7 +215,7 @@ function addProduct($conn, $productName, $productDesc, $productCatergory, $produ
     }
     
     // close statement and connection
-    if(mysqli_stmt_bind_param($stmt, "sssdis", $productName, $productDesc, $productCatergory, $productPrice, $productQuantity, $imagePath) === false){
+    if(mysqli_stmt_bind_param($stmt, "sssds", $productName, $productDesc, $productCatergory, $productPrice, $imagePath) === false){
         header("location: ../PHP/admin/addProduct.php?error=stmtFailedBind");    
         exit();
     }

@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../css/admin.css">
 	<link rel="stylesheet" href="../../css/profile-dropdown.css">
+	<link rel="stylesheet" href="../../css/addProduct.css">
 </head>
 <body>
 <header>

@@ -74,9 +74,6 @@
 				// Generate Bootstrap cards for each product
 				while ($row = mysqli_fetch_assoc($result)) {
 					// check if product is available
-					if($row['prodQty'] <= 0){
-						continue;
-					}
 					echo '<div class="col-p-sm-0 col-md-12 col-lg-6 col-xl-4 pb-4 card-prods">';
 					echo '<div class="card card-horizontal h-100 d-flex align-items-center shadow-sm">';
 					echo '<a href="" data-toggle="modal" data-target="#productModal' . $row["prodId"] . '"><img src="' . $row["prodImage"] . '" class="card-img-responsive" alt="' . $row["prodName"] . '"></a>';
@@ -87,7 +84,7 @@
 					echo '<input type="hidden" name="prodId" value="' . $row['prodId'] . '">';
 					echo '<input type="hidden" name="quantity" value="1">';
 					echo '<button type="button" class="btn" data-toggle="modal" data-target="#productModal' . $row["prodId"] . '">View Details</button>';
-					echo '<button type="submit" id="add-to-cart" name="add_to_cart" class="btn btn-primary">Add to Cart</button>';
+					echo '<button type="submit" id="add-to-cart" name="add_to_cart" class="btn btn-primary">Add to Package</button>';
 					echo '</form>';
 					echo '</div>';
 					echo '</div>';
@@ -106,15 +103,7 @@
 					echo '<div class="modal-body">';
 					echo '<img src="' . $row["prodImage"] . '" class="img-fluid mb-2" style="max-height:250px;"' . $row["prodName"] . '">';
 					echo '<p class="mb-2">₱' . $row["prodPrice"] . '</p>';
-					echo '<p class="mb-2" style="display: inline-block">Stock: ' . $row["prodQty"] . 
-						'</p>';
 					echo '<p class="mb-4">' . $row["prodDesc"] . '</p>';
-					echo '<hr class="hr" />';
-					echo '<form id="modal-wishlist" method="post" action="../../includes/addToWishlist.inc.php">';
-					echo '<button type="submit" class="btn" name="addToWishlist">Add to Wishlist</button>';
-					echo '<input type="hidden" name="prodId" value="' . $row['prodId'] . '">';
-					echo '<input type="hidden" name="userId" value="' . $_SESSION['userid'] . '">';
-					echo '</form>';
 					echo '</div>';
 					echo '</div>';
 					echo '</div>';
@@ -137,7 +126,7 @@
 							echo 'Added to cart successfully</div>';
 						}
 						else if ($_GET["addedToCart"] == "failed"){
-							echo "<p>Add to cart failed!</p>";
+							echo "<p>Add to Package failed!</p>";
 						}
 						echo '<div class="modal-footer-2">';
 						echo '<button type="button" class="btn btn" data-dismiss="modal" style="border-radius: 2px; background-color: #ddd;">';

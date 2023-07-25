@@ -16,10 +16,9 @@ if (isset($_POST["submit"])) {
     $productName = $_POST["name"];
     $productDesc = $_POST["desc"];
     $productPrice = $_POST["price"];
-    $productQuantity = $_POST["quantity"];
     $productCatergory = strtolower($_POST["category"]);
 
-    if(emptyInputProduct($productName, $productDesc, $productCatergory, $productPrice, $productQuantity) !== false){
+    if(emptyInputProduct($productName, $productDesc, $productCatergory, $productPrice) !== false){
         header("location: ../PHP/admin/addProduct.php?error=emptyinput");
         exit();    
     }
@@ -31,7 +30,7 @@ if (isset($_POST["submit"])) {
         exit();    
     }
 
-    addProduct($conn, $productName, $productDesc, $productCatergory, $productPrice, $productQuantity, $imagePath);
+    addProduct($conn, $productName, $productDesc, $productCatergory, $productPrice, $imagePath);
     header("location: ../PHP/admin/addProduct.php?addProduct=success");
 }
 
