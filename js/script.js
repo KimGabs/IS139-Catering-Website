@@ -45,3 +45,4 @@ function submitCategory() {
   document.getElementById("category").submit();
 }
   
+

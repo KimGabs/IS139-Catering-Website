@@ -69,3 +69,12 @@ progressBars.forEach(progressBar => {
     progressBar.classList.add('cancelled');
   }
 });
+
+
+document.getElementById("clearPackageBtn").addEventListener("click", function() {
+  // Clear the package cookie by setting its expiration to a past date
+  document.cookie = "package=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+  // Optionally, you can reload the page to see the changes (if needed)
+  location.reload();
+});

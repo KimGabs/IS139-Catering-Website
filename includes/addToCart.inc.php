@@ -3,32 +3,20 @@ session_start();
 
 require_once 'database.inc.php';
 
-if(!isset($_SESSION['userid'])) {
-    header("location: ../PHP/public/products.php?error=userNotLogin" . $_SESSION["userid"] . "");
-    exit();
-}
-
 // Check if the product ID and quantity have been provided
 if (!isset($_POST['prodId'])) {
-    header("location: ../PHP/public/products.php?error=prodIdNotProvided" . $_SESSION["userid"] . "");
+    header("location: ../PHP/public/products.php?error=prodIdNotProvided");
     exit();
-}
-
-// Check if the cart session variable exists
-if (!isset($_SESSION['cart'])) {
-    // If it doesn't exist, create it as an empty array
-    $_SESSION['cart'] = array();
 }
 
   // Check if the user has added a product to their cart
-  if (isset($_POST['add_to_cart'])) {
+  if (isset($_POST['add_to_package'])) {
 
     // Get the product ID and quantity from the form submission
     $prodId = $_POST['prodId'];
-    $quantity = $_POST['quantity'];      
+    $quantity = $_POST['quantity'];   
     $loc = $_POST['loc'];
     // Get the user ID from the session
-    $userId = $_SESSION['userid'];
     $cartNum = $_SESSION['cart'];
     if($loc == 'index'){
         // $direct = header('Location: ../PHP/index.php?addedToCart=success');

@@ -9,12 +9,12 @@ echo '<div class=\'container-fluid\'>
                 <ul class=\'nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start\' id=\'menu\'>
                     <li class=\'nav-item\'>
                         <a href=\'manageOrders.php\' class=\'nav-link align-middle px-0\'>
-                            <i class=\'fs-5 bi-house\'></i> <span class=\'ms-1 d-none d-sm-inline\'>My Orders</span>
+                            <i class=\'fs-5 bi-card-checklist\'></i> <span class=\'ms-1 d-none d-sm-inline\'>My Orders</span>
                         </a>
                     </li>
                     <li>
                         <a href=\'#submenu1\' data-bs-toggle=\'collapse\' class=\'nav-link px-0 align-middle\'>
-                            <i class=\'fs-4 bi-speedometer2\'></i> <span class=\'ms-1 d-none d-sm-inline\'>My Website</span> </a>
+                            <i class=\'fs-4 bi-house\'></i> <span class=\'ms-1 d-none d-sm-inline\'>My Website</span> </a>
                             <div class=\'collapse\' id=\'submenu1\' data-bs-parent=\'#menu\'>
                                 <ul class=\'nav flex-column ms-1\'>
                                     <li class=\'w-100\'>
@@ -34,11 +34,11 @@ echo '<div class=\'container-fluid\'>
                     </li>
                     <li>
                         <a href=\'#\' class=\'nav-link px-0 align-middle\'>
-                            <i class=\'fs-4 bi-people\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Events Calendar</span> </a>
+                            <i class=\'fs-4 bi-calendar-event\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Events Calendar</span> </a>
                     </li>
                     <li>
                         <a href=\'addProduct.php\' class=\'nav-link px-0 align-middle\'>
-                            <i class=\'fs-4 bi-people\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Add New Item</span> </a>
+                            <i class=\'fs-4 bi-plus-circle\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Add New Item</span> </a>
                     </li>
                 </ul>
             </div>

@@ -37,5 +37,5 @@ if (isset($_POST["submit"])) {
 
 }
 else {
-    header("location: ../PHP/public/entry/register.php");
+    header("location: ../PHP/admin/myOrders.php");
 }

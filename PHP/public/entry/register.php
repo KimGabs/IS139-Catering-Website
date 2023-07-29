@@ -3,7 +3,7 @@
 ?>
 	<main>
 		<section class="signup-form">
-		<h1>Create Account</h1>
+		<h1>Register account</h1>
 		<div class="signup-form-2">
             <form action="../../../includes/register.inc.php" method="post">
                 <input type="text" name="name" placeholder="Full name">
@@ -39,9 +39,6 @@
             }
         }
         ?>
-        <div>
-            <a href="login.php">Already have an account?</a>
-        </div>
 		</section>
 	</main>
 <?php
