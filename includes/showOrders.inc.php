@@ -6,9 +6,7 @@
 		require_once '../../includes/functions.inc.php';
 
 			// query to select all columns from orders and order_items table
-			$query = "SELECT o.orderId, o.orderDate, o.shippingAddress, o.postal, o.city, o.contactNo, u.usersID,
-			u.usersName, o.deliveryMethod, o.payment_method, o.deliveryFee, o.totalPrice, o.orderStatus
-			FROM orders o JOIN users u ON o.usersId = u.usersID ORDER BY o.orderId ASC";
+			$query = "SELECT * FROM orders ORDER BY orderId ASC";
 
 			$result = mysqli_query($conn, $query);
 
@@ -18,34 +16,31 @@
 				
 				// Loop through rows and print data in table cells
 				while ($row = mysqli_fetch_assoc($result)) {	
-					if(empty($row['shippingAddress'])){
-						continue;
-					}
 					// Trim date
 					$orderDate = $row['orderDate'];
 					$date = explode(" ", $orderDate);
 					unset($date[1]);
 					$date = implode(" ", $date);
-					$totalP = $row['totalPrice'] + $row['deliveryFee'];
+					$totalP = $row['totalPrice'];
+					$dateTime = DateTime::createFromFormat('H:i', $row['eventTime']);
+					$formattedTime = $dateTime->format('g:i A');
+
 
 					echo "
 						<tbody>	
 						<tr class='accordion-toggle'>
 							<td><button type='button' data-toggle='collapse' data-target='#order-info-" . $row["orderId"] . "' class='btn btn-others btn-xs'>Collapse</button></td>
-							<td style='text-align: center;'>" . $row["orderId"] . "</td>
-							<td>" . $row["usersName"] . "</td>
-							<td>" . $row["shippingAddress"] . "<small class='d-block'>" . $row['postal'] . ", " . $row['city'] . "</small></td>
-							<td>". $row['contactNo'] . "</td>
-							<td>". number_format($totalP, 2, '.', '') . "</td>";
-							echo "<td>";
+							<td style='vertical-align: middle;text-align: center;'>" . $row["orderId"] . "</td>
+							<td style='vertical-align: middle;'>" . $row["cxName"] . "</td>
+							<td style='vertical-align: middle;'>" . $row["eventDate"] . "</td>
+							<td style='vertical-align: middle;'>". $formattedTime . "</td>
+							<td style='vertical-align: middle;'>₱". number_format($totalP, 2, '.', ',') . "</td>";
+							echo "<td style='vertical-align: middle;'>";
 							// START OF FORM
 							echo "<select class='status' name='changeOrderStatus[]' onchange='updateOrderStatus()'>";
 							if ($row['orderStatus'] == 'processing'){
 								echo "<option value='processing' selected='selected'>Processing</option>";
 							}else{echo "<option value='processing'>Processing</option>";}
-							if ($row['orderStatus'] == 'shipped'){
-								echo "<option value='shipped' selected='selected'>Shipped</option>";
-							}else{echo "<option value='shipped'>Shipped</option>";}
 							if ($row['orderStatus'] == 'completed'){
 								echo "<option value='completed' selected='selected'>Completed</option>";
 							}else{echo "<option value='completed'>Completed</option>";}
@@ -54,6 +49,7 @@
 							}else{echo "<option value='cancelled'>Cancelled</option>";}
 							echo "</select>";
 							echo "<input type='hidden' name='orderId[]' value=" . $row["orderId"] . ">";
+
 							// END OF FORM
 							echo "</td>";
 							echo "<td><button type='button' class='btn-secondary status' data-toggle='modal' data-target='#myModal" . $row["orderId"] . "'>View Details</button></td>";
@@ -65,19 +61,18 @@
 									<thead>
 										<tr class='info mb-2'>
 											<th style='text-align: center;'>Order Date</th>
-											<th>Delivery Method</th>	
-											<th>Payment Method</th>	
-											<th>Delivery Fee</th>	
-											<th>Subtotal</th>	
+											<th>Contact Number</th>	
+											<th>Location of Event</th>	
+											<th>Request</th>	
+
 										</tr>
 									</thead>	
 							<tbody>	
 								<tr data-toggle='collapse'  class='accordion-toggle'>
 									<td style='text-align: center;'>" . $date . "</td>
-									<td style='text-transform: capitalize;'>". $row['deliveryMethod'] . "</td>	
-									<td style='text-transform: capitalize;'>". $row['payment_method'] . "</td>
-									<td>" . $row['deliveryFee'] . "</td>
-									<td>". $row['totalPrice'] . "</td>
+									<td style='text-transform: capitalize;'>". $row['contactNo'] . "</td>	
+									<td style='text-transform: capitalize;'>". $row['eventLocation'] . "</td>
+									<td style='text-transform: capitalize;'>" . $row['request'] . "</td>
 								</tr>
                       		</tbody>
               			</table>
@@ -87,7 +82,7 @@
 
 					// MODAL 
 					$orderId = $row["orderId"];
-					$sql2 = "SELECT oi.*, p.prodName 
+					$sql2 = "SELECT oi.*, p.* 
 							FROM order_items oi 
 							INNER JOIN products p ON oi.prodId = p.prodId 
 							WHERE oi.orderId = $orderId;";
@@ -95,7 +90,16 @@
 					$rows = "";
 					if (mysqli_num_rows($result2) > 0) {
 						while($row2 = mysqli_fetch_assoc($result2)) {
-							$rows .= "<div class='row'><div class='col-2'>" . $row2["prodId"] . "</div><div class='col-5'>" . $row2["prodName"] . "</div><div class='col'>" . $row2["quantity"] . "</div><div class='col'>" . $row2["price"] . "</div></div>";
+							$totallProdPrice = ($row2["prodPrice"] * $row2["pax"]);
+							if($row2["rice"] == "on"){
+								$riceStmt = "(With rice)";
+								$ricePrice = 10;
+							}else{
+								$riceStmt = "";
+							}
+
+							$rows .= "<div class='row'><div class='col-md-3'>" . $row2["pkgId"] . " " . $riceStmt . "</div><div class='col-md-4'>" . $row2["prodName"] . "</div>
+							<div class='col-md-2'>" . $row2["pax"] . "</div><div class='col-md-2'>₱" . number_format($totallProdPrice, 2, '.', ',') . "</div></div>";
 						}
 					} else {
 						$rows .= "<tr><td colspan='3'>No items found.</td></tr>";
@@ -103,10 +107,10 @@
 					// Generate modal HTML
 					$table = "<div>
 					<div class='row'>
-							<div class='col-2'>Item ID</div>
-							<div class='col-5'>Item Name</div>
-							<div class='col'>Quantity</div>
-							<div class='col'>Price</div>
+							<div class='col-md-3'>Package ID</div>
+							<div class='col-md-4'>Product Name</div>
+							<div class='col-md-2'>PAX</div>
+							<div class='col-md-2'>Price</div>
 					</div>
 						$rows
 					</div>";
@@ -121,7 +125,7 @@
 									' . $table . '
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: white; background-color: #212529">Close</button>
+									<button type="button" class="btn" data-dismiss="modal" style="color: white; background-color: #212529">Close</button>
 								</div>
 							</div>
 						</div>

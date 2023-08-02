@@ -14,10 +14,10 @@
 						<tr>
 							<th></th>
 							<th style='text-align: center;'>Order No.</th>
-							<th>Recipient</th>
-							<th>Address</th>
-							<th>Contact No.</th>			
-							<th>Total Price</th>
+							<th>Customer Name</th>
+							<th>Event Date</th>
+							<th>Event Time</th>			
+							<th>Total</th>
 							<th>Order Status</th>
 						</tr>
 					</thead>
@@ -35,5 +35,5 @@
     </div>
 </div>
 <?php
-	// include_once 'footer.php';
+	include_once 'footer.php';
 ?>

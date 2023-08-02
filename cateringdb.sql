@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 17, 2023 at 05:47 PM
+-- Generation Time: Aug 02, 2023 at 06:31 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.2
 
@@ -24,14 +24,16 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Table structure for table `inquiries`
 --
 
-CREATE TABLE `cart` (
-  `cartId` int(11) NOT NULL,
-  `usersID` int(11) NOT NULL,
-  `prodId` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
+CREATE TABLE `inquiries` (
+  `inquiryId` int(11) NOT NULL,
+  `senderName` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `submission_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -42,16 +44,14 @@ CREATE TABLE `cart` (
 
 CREATE TABLE `orders` (
   `orderId` int(11) UNSIGNED NOT NULL,
-  `usersId` int(11) NOT NULL,
   `orderDate` timestamp NOT NULL DEFAULT current_timestamp(),
-  `shippingAddress` varchar(255) DEFAULT NULL,
-  `postal` varchar(10) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
+  `cxName` varchar(255) DEFAULT NULL,
   `contactNo` varchar(20) DEFAULT NULL,
-  `deliveryMethod` varchar(50) DEFAULT NULL,
-  `deliveryFee` decimal(10,2) DEFAULT NULL,
+  `eventDate` date DEFAULT NULL,
+  `eventTime` varchar(64) DEFAULT NULL,
+  `eventLocation` varchar(255) DEFAULT NULL,
+  `request` text DEFAULT NULL,
   `totalPrice` decimal(10,2) DEFAULT NULL,
-  `payment_method` varchar(85) NOT NULL DEFAULT 'COD',
   `orderStatus` varchar(50) DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -62,11 +62,13 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `order_items` (
-  `item_id` int(11) UNSIGNED NOT NULL,
+  `orderItemId` int(11) UNSIGNED NOT NULL,
+  `pkgId` int(11) NOT NULL,
   `orderId` int(11) UNSIGNED NOT NULL,
   `prodId` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `price` decimal(10,2) NOT NULL
+  `pax` int(11) DEFAULT NULL,
+  `rice` varchar(32) DEFAULT NULL,
+  `total` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -81,7 +83,6 @@ CREATE TABLE `products` (
   `prodDesc` text DEFAULT NULL,
   `prodCat` varchar(128) DEFAULT NULL,
   `prodPrice` decimal(10,2) NOT NULL,
-  `prodQty` int(11) NOT NULL,
   `prodImage` varchar(512) DEFAULT NULL,
   `prodCreated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `prodUpdated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -99,34 +100,38 @@ CREATE TABLE `users` (
   `usersEmail` varchar(128) NOT NULL,
   `usersUid` varchar(128) NOT NULL,
   `usersPwd` varchar(128) NOT NULL,
-  `user_type` varchar(20) NOT NULL DEFAULT 'regular',
-  `deliveryMethod` varchar(50) DEFAULT 'standard'
+  `user_type` varchar(20) NOT NULL DEFAULT 'admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`usersID`, `usersName`, `usersEmail`, `usersUid`, `usersPwd`, `user_type`) VALUES
+(9, 'John Doe', 'johndoe@aol.com', 'jdoe12', '$2y$10$APbT1w6lUskEM7zyyhG1w.MdwV.Ea6g4g0S/Q7vWGBuqd/8/gpyc6', 'admin'),
+(10, 'Kim Carlo', 'admin02@croms.com', 'admin', '$2y$10$qBovuIgTIR1dpsoAmWmn5OQ0.7sidFxn66MF2Z/TDFIxXKR3HcekK', 'admin');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cart`
+-- Indexes for table `inquiries`
 --
-ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cartId`),
-  ADD KEY `usersID` (`usersID`),
-  ADD KEY `prodId` (`prodId`);
+ALTER TABLE `inquiries`
+  ADD PRIMARY KEY (`inquiryId`);
 
 --
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`orderId`),
-  ADD KEY `usersId` (`usersId`);
+  ADD PRIMARY KEY (`orderId`);
 
 --
 -- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD PRIMARY KEY (`item_id`),
+  ADD PRIMARY KEY (`orderItemId`),
   ADD KEY `orderId` (`orderId`),
   ADD KEY `prodId` (`prodId`);
 
@@ -147,51 +152,38 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `cart`
+-- AUTO_INCREMENT for table `inquiries`
 --
-ALTER TABLE `cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+ALTER TABLE `inquiries`
+  MODIFY `inquiryId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `orderId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `item_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `orderItemId` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `prodId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `prodId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `usersID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`usersID`) REFERENCES `users` (`usersID`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`prodId`) REFERENCES `products` (`prodId`);
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`usersId`) REFERENCES `users` (`usersID`);
 
 --
 -- Constraints for table `order_items`

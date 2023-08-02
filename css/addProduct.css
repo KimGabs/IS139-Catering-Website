@@ -1,9 +1,13 @@
+body{
+  overflow-x: hidden;
+  overflow-y:auto;
+}
 .add-product-form{
     display: flex;
     flex-direction: column;
     background-color: #fff;
     justify-content: center;
-    margin-right: auto;
+    margin-right: 0px !important;
     padding: 2em 2em 2em;
     border-radius: 20px;
     width: 70%;

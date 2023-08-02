@@ -1,0 +1,326 @@
+/* Manage orders */
+h2 {
+    font-size: 20px;
+    }
+    
+  .custom-table {
+    line-height: 1.2;
+    margin-bottom: 100px;
+    }
+    .custom-table thead tr, .custom-table thead th {
+      border-top: none;
+      border-bottom: none !important; }
+    .custom-table tbody th, .custom-table tbody td {
+      color: #777;
+      font-weight: 400;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      font-weight: 300; }
+      .custom-table tbody th small, .custom-table tbody td small {
+        color: #b3b3b3;
+        font-weight: 300; }
+    .custom-table tbody tr:not(.spacer) {
+      border-radius: 7px;
+      overflow: hidden;
+      -webkit-transition: .3s all ease;
+      -o-transition: .3s all ease;
+      transition: .3s all ease; }
+      .custom-table tbody tr:not(.spacer):hover {
+        -webkit-box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.1); }
+    .custom-table tbody tr th, .custom-table tbody tr td {
+      background: #fff;
+      border: none; }
+      .custom-table tbody tr th:first-child, .custom-table tbody tr td:first-child {
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px; }
+      .custom-table tbody tr th:last-child, .custom-table tbody tr td:last-child {
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px; }
+    .custom-table tbody tr.spacer td {
+      padding: 0 !important;
+      height: 10px;
+      border-radius: 0 !important;
+      background: transparent !important;
+      }
+    .custom-table .btn-others{
+      background-color:#1664cb;
+      color: white;
+    }
+  
+    .info.mb-2 th{
+      font-weight: bold;
+    }
+  
+  Table {
+    border-collapse: collapse;
+  }
+  
+  select.status {
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    padding: 0.2em 0.5em 0.2em 0.1em;
+  }
+  
+  button.status{
+    padding: 8px 8px 8px 8px;
+    border-radius: 5px;
+    background-color: #face3f;
+    color: #363844;
+    font-weight: 500;
+    border: transparent;
+    transition: background-color 0.3s;
+  }
+  
+  button.status:hover{
+    background-color: #fed703;
+    color: #363844;
+  }
+  
+  .accordion-toggle button[data-toggle="collapse"]{
+    padding: 4.5px 9px; 
+    max-width: 8em; 
+    margin-top:0;
+    margin-left:5px;
+    margin-right:-10px;
+    box-shadow: none;
+  }
+  
+  .accordion-body{
+    border: 2px solid rgb(117, 117, 117);
+    border-radius: 3px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  .accordion-body.collapsing{
+    height:0;
+    overflow: hidden;
+    transition: height .30s ease;
+    margin: 0;
+    padding: 0;
+  }
+
+  .table-hover{
+    margin-bottom: 0;
+  }
+  
+  /* My Orders */
+  .myOrders button.status{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .myOrders label{
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    margin-bottom: 0;
+    padding: 7px 16px;
+    border-radius: 12px;
+  }
+  
+  .myOrders label[value='processing']{
+    background-color: #dcc65c;
+    color: white;
+  }
+  
+  .myOrders label[value='shipped']{
+    background-color: #faa00f;
+    color: white;
+  }
+  
+  .myOrders label[value='completed']{
+    background-color: #16be16;
+    color: white;
+  }
+  
+  .myOrders label[value='cancelled']{
+    background-color: #c1c1c1;
+    color: white;
+  }
+  
+  /* My Orders2 */
+  
+  .container-orders .card{
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .course {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    max-width: 100%;
+    margin: 20px;
+    overflow: hidden;
+    width: 700px;
+    border: 4.5px solid #F5CFCF;
+  }
+  
+  .course h6 {
+    width: fit-content;
+    color: #fa5d94;
+    font-weight: bold;
+      margin: 0px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+  }
+  
+  .course h5 {
+    font-weight: 500;
+      margin: 0px;
+      letter-spacing: 0.5px;
+  }
+  
+  .course h2 {
+    font-weight: 500;
+      letter-spacing: 0.5px;
+      margin: 15px 0;;
+  }
+  
+  .course-preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
+    color: #fff;
+      max-width: 250px;
+    background-color: #fff;
+  }
+  
+  .course-preview img{
+    min-width: 0px;
+    max-width: auto;
+    max-height: 160px;
+    padding: 0;
+    border-right: 5px solid #F5CFCF;
+  }
+  
+  .course-info {
+    padding: 25px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .progress-container {
+      position: absolute;
+      top: 26px;
+      right: 30px;
+      text-align: right;
+      width: 156px;
+  }
+  
+  .progress {
+      background-color: #ddd;
+      border-radius: 3px;
+      height: 5px;
+      width: 100%;
+    margin-bottom: 2px;
+    position: relative;
+  }
+  
+  .progress::after {
+      border-radius: 3px;
+      background-color: #fa5d94;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 0%;
+    z-index: 1;
+  }
+  
+  .processing::after {width: 33%;}
+  .shipped::after {width: 50%;}
+  .completed::after {width: 100%;}
+  .cancelled::after {width: 0%;}
+  
+  .progress-text {
+      font-size: 14px;
+      opacity: 0.6;
+      letter-spacing: 1px;
+    line-height: 1;
+  }
+  
+  .container-orders button[data-toggle='modal'] {
+      background-color: #f7a7a7;
+      border: 0;
+      border-radius: 50px;
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+      color: #fff;
+      font-size: 16px;
+      padding: 8px 15px;
+      bottom: 20px;
+      right: 28px;
+      letter-spacing: 1px;
+    width: 30%;
+    position: absolute;
+    margin: 0;
+  }
+  
+  .container-orders button[data-toggle='modal']:hover {
+    background-color: #fa5d94;
+  }
+  
+  .prod-image img{
+    min-width: 0px;
+    max-width: auto;
+    max-height: 100px;
+    padding: 0;
+  }
+  
+  .prod-row {
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+  }
+  
+  h2.modal-test-h{
+    margin: 12px 0 12px 0 ;
+  }
+  
+  .myOrder .modal-dialog {
+      max-width: 500px;
+      margin: 1rem auto;
+      overflow-y: initial !important
+  }
+  
+  .myOrder .modal-body{
+    height: 70vh;
+    overflow-y: auto;
+  }
+  
+  .myOrder .btn{
+    margin-top: 0.50rem; 
+    border-radius: 4px;
+  }
+  
+  .myOrder .btn.cancel{
+    color: #e52020; 
+    border-style: inset;
+    border: 2px solid #e52020;
+  }
+  
+  .myOrder .btn.cancel:focus{
+    background: #fff;
+  }
+  
+  .myOrder .btn.cancel:hover{
+    color: #fff; 
+    background-color: #e52020;
+  }
+  
+  .myOrder .btn.close{
+    color: #363844; 
+    border-style: inset;
+    border: 2px solid #363844;
+  }
+  
+  .myOrder .btn.close:hover{
+    color: #fff; 
+    background-color: #363844;
+  }
+  
