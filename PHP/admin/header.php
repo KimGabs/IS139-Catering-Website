@@ -35,14 +35,14 @@
 					echo "<img class='profile-pic' src='../../img/logo-1.png' alt='Profile Picture' style='width:45px;height:auto;'>";
 					echo "<span class='ml-2' style='color:white;font-weight:bold'>CROMS Catering</span>";
 					echo "<div class='dropdown-content'>";
-					if($_SESSION["userType"] == 'regular') {;
-					// echo "<a href='#'>Profile</a>";
+					if($_SESSION["userType"] == 'admin') {;
+					echo "<a href='#'>Admin Page</a>";
 					echo "<a href='../public/entry/register.php'>Register Admin</a>";
 					echo "<a href='../../includes/logout.inc.php'>Log out</a>";
 					}
 					else{
-						header("location: ../PHP/index.php");
-						echo "<a href='../../includes/logout.inc.php'>Log out</a>";
+						header("location: ../../index.php");
+						exit();
 					}
 				
 					echo "</div>";

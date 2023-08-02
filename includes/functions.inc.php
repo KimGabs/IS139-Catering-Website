@@ -277,108 +277,85 @@ mysqli_close($conn);
 }
 
 // Remove Product/Item from cart
-function removeFromCart($conn, $cartId, $usersID, $prodId) {
-
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
+function removeFromCart($pkgId, $cart) {
+    
+    if(isset($cart[$pkgId])){
+        unset($cart[$pkgId]);
     }
 
-    $sql = "SELECT * FROM cart WHERE cartId = $cartId AND usersID = $usersID AND prodId = $prodId";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-
-    $sql = "UPDATE products SET prodQty = prodQty + ? WHERE prodId = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ii", $row['quantity'], $prodId);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    $query = "DELETE FROM cart WHERE cartId = ? AND usersID = ? AND prodId = ?";
-    $stmt = mysqli_prepare($conn, $query);
-
-    mysqli_stmt_bind_param($stmt, "iii", $cartId, $usersID, $prodId);
-
-    if(mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        header("location: ../PHP/public/cart.php?productRemoved");
-        exit();
-    } else {
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        header("location: ../PHP/public/cart.php?error=stmtFailed");
-        exit();
-    }
+    // Re-index the array to avoid gaps
+    $cart = array_values($cart);
+    setcookie("cart", json_encode($cart), time() + (86400 * 30), '/');
+    
+    header("location: ../PHP/public/cart.php");
+    exit();
+    
 }
 
 
-function getDeliveryMethod($conn, $usersID, $dlvy){
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    $query = "UPDATE users SET deliveryMethod = ? WHERE usersID = ?";
-    $stmt = mysqli_prepare($conn, $query);
+function editPackageMethod($pkgId){
 
-    mysqli_stmt_bind_param($stmt, "si", $dlvy, $usersID);
-    if(mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        header("location: ../PHP/public/cart.php?dlvy=updated");
-        exit();
-    } else {
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn);
-        header("location: ../PHP/public/cart.php?error=stmtFailed");
-        exit();
+    $cart = isset($_COOKIE["cart"]) ? json_decode($_COOKIE["cart"]) : [];
+    $package = isset($_COOKIE["package"]) ? json_decode($_COOKIE["package"]) : [];
+    
+    if(isset($package)){
+        unset($package);
     }
+
+    if (isset($cart[$pkgId])) {
+        // Remove the element from the cart cookie
+        $removedElement = array_splice($cart, $pkgId, 1)[0];
+    
+        // Add the removed element to the package cookie
+        $package[] = $removedElement;
+    
+        // Update the cookies with the modified arrays
+        setcookie("cart", json_encode($cart), time() + (86400 * 30), '/');
+        setcookie("package", json_encode($package), time() + (86400 * 30), '/');
+    }
+    else{
+        header("location: ../PHP/public/menu.php?editPkg=success");
+        exit();    
+    }
+    header("location: ../PHP/public/menu.php?editPkg=success");
+    exit();
+    
 }
 
-function checkout($conn, $usersID, $delMethod, $delFee, $totalPrice){
+function submitForm($conn, $name, $contact, $date, $time, $loc, $cart, $req){
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    updateOrder($conn, $usersID, $delMethod, $delFee, $totalPrice);
-    header("location: ../PHP/public/checkout.php");
+    updateOrder($conn, $name, $contact, $date, $time, $loc, $cart, $req);
+    updateOrderItem($conn, $name, $cart);
+    header("location: ../PHP/index.php?order=Submited");
     exit();
 }
 
-function updateOrder($conn, $usersID, $delMethod, $delFee, $totalPrice){
+function updateOrder($conn, $name, $contact, $date, $time, $loc, $cart, $req){
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    // Check if the order already exists
-    $stmt = $conn->prepare("SELECT * FROM orders WHERE usersId = ? AND orderStatus='pending'");
-    $stmt->bind_param("i", $usersID);
+    session_start();
+    $totalPrice = $_SESSION['totalPrice'];
+    
+    // Insert the order into the orders table
+    $stmt = $conn->prepare("INSERT INTO orders (cxName, contactNo, eventDate, eventTime, eventLocation, request, totalPrice)
+    VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssd", $name, $contact, $date, $time, $loc, $req, $totalPrice);
     $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        // Update the existing order
-        $stmt = $conn->prepare("UPDATE orders SET orderDate = NOW(), deliveryFee = ?, deliveryMethod = ?, totalPrice = ?
-                                WHERE usersId = ? AND orderStatus='pending'");
-        $stmt->bind_param("dsdi", $delFee, $delMethod, $totalPrice, $usersID);
-        $stmt->execute();
-        $stmt->close();
-        return;
-    } else{
-        // Insert the order into the orders table
-        $stmt = $conn->prepare("INSERT INTO orders (usersId, deliveryMethod, deliveryFee, totalPrice)
-        VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isdd", $usersID, $delMethod, $delFee, $totalPrice);
-        $stmt->execute();
-        $stmt->close();
-        return;
-    }
+    $stmt->close();
+    return;
 }
 
-function updateOrderItem($conn, $usersID){
+function updateOrderItem($conn, $name, $cart){
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
     // Check if the order already exists
-    $stmt = $conn->prepare("SELECT orderId FROM orders WHERE usersId=? AND orderStatus='pending'");
-    $stmt->bind_param("i", $usersID);
+    $stmt = $conn->prepare("SELECT orderId FROM orders WHERE cxName=? AND orderStatus='pending'");
+    $stmt->bind_param("i", $name);
     $stmt->execute();
     $result1 = $stmt->get_result();
 
@@ -387,24 +364,47 @@ function updateOrderItem($conn, $usersID){
         $orderId = $row['orderId'];
     }
 
-    // Retrieve the cart data from the database for the current user
-    $stmt = $conn->prepare("SELECT c.prodId, c.quantity, p.prodPrice 
-                            FROM cart c 
-                            INNER JOIN products p ON c.prodId = p.prodId 
-                            WHERE c.usersID = ?");
-    $stmt->bind_param("i", $usersID);
-    $stmt->execute();
-    $result2 = $stmt->get_result();
+    session_start();
+    $sql = "SELECT * FROM products";
+    $result2 = mysqli_query($conn, $sql);
+    $pkg_count = 0;
+    foreach($cart as $pkg){
+        $pkg_count++;
+        foreach($pkg as $item){
+            $total = 0;
+            if (isset($item->prodId)) {
+                mysqli_data_seek($result2, 0); // Reset the pointer to the beginning of $result
+                while ($row = mysqli_fetch_assoc($result2)) {
+                    if ($item->prodId == $row["prodId"]){
+                        $total += $row['prodPrice'];
+                        $stmt = $conn->prepare("INSERT INTO order_items (orderId, pkg_id, prodId) VALUES (?, ?, ?)");
+                        $stmt->bind_param("iii", $orderId, $pkg_count, $row['prodId']);
+                        $prodId = $row['prodId'];
+                        $prodPrice = $row['prodPrice'];
+                        $stmt->execute();
+                        $stmt->close();
+                    }
+                }
+            }
+            if (isset($item->rice)) {
+                $rice = $item->rice;
+                if($item->rice == "on"){
+                    $ricePrice = 10;
+                }else{$ricePrice = 0;}
+            }if(isset($item->pax)){
+                $pax = $item->pax;
+            }   
+            $subtotal = $prodPrice * $pax;
+            $stmt = $conn->prepare("UPDATE order_items SET rice = ?, pax = ?, total = ? WHERE orderId = ? AND pkg_id = ? AND prodId = ?");
+            $stmt->bind_param("sidiii", $rice, $pax, $subtotal, $orderId, $pkg_count, $prodId);
+            $stmt->execute();
+            $stmt->close();
+        }
 
-        // Insert each item from the cart into the order_items table with the newly created order_id
-    while ($row = $result2->fetch_assoc()) {
-        $stmt = $conn->prepare("INSERT INTO order_items (orderId, prodId, quantity, price) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiid", $orderId, $row['prodId'], $row['quantity'], $row['prodPrice']);
-        $stmt->execute();
-        $stmt->close();
-    }   
+
     
-    return $orderId;
+    }
+    return;
 }
 
 function emptyAddress($contactNo, $address, $postal, $city){
@@ -422,19 +422,19 @@ function emptyAddress($contactNo, $address, $postal, $city){
 function placeOrder($conn, $usersID, $address, $postal, $city, $contactNo){
 
     // Completes the order table
-    fillOrder($conn, $usersID, $address, $postal, $city, $contactNo);
+    // fillOrder($conn, $usersID, $address, $postal, $city, $contactNo);
     
     // Inserts into order_item table
-    $orderid = updateOrderItem($conn, $usersID);
+    // $orderid = updateOrderItem($conn, $usersID);
 
     // Clear the cart for this user
-    clearCart($conn, $usersID);
+    // clearCart($conn, $usersID);
 
     // Updates order status 
-    promotePendingStatus($conn, $usersID, $orderid);
+    // promotePendingStatus($conn, $usersID, $orderid);
 
-    header("location: ../PHP/index.php?orderSubmit=success");
-    exit();
+    // header("location: ../PHP/index.php?orderSubmit=success");
+    // exit();
 }
 
 function fillOrder($conn, $usersID, $address, $postal, $city, $contactNo){
@@ -522,4 +522,29 @@ function updateProducts($conn, $userid, $prodid, $name, $desc, $prodCategory, $p
     exit();
   }
 
+}
+
+
+function emptyPkgInput($pax) {
+    $result;
+    if (empty($pax)) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+
+function invalidPax($pax) {
+    $result;
+    $paxInt = intval($pax);
+
+    if ($paxInt < 30) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
 }

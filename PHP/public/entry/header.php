@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	//initialize cart if not set or is unset
 	if (!isset($_COOKIE['cart']) and !isset($_COOKIE['package'])) {
 		$cart = array();

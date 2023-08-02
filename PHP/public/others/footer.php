@@ -9,5 +9,5 @@
 	</div>
 	</footer>
 </html>
-<script type="text/javascript" type="text/javascript" src="../../../js/script.js"></script>
+<script type="text/javascript" src="../../../js/script.js"></script>
 <script type="text/javascript" src="../../../js/script-2.js"></script>

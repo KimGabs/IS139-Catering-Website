@@ -4,30 +4,33 @@
     require_once 'functions.inc.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_POST["checkout"])){
-            $usersID = $_POST["userId"];
-            $delMethod = $_POST['delMethod'];
-            $delFee = $_POST['delFee'];
-            $totalPrice = $_POST['subTotal'];            
+        if (isset($_POST["submitOrder"])){
+            $name = $_POST["nameInput"];
+            $contact = $_POST['contactInput'];
+            $date = $_POST['dateInput'];
+            $time = $_POST['timeInput'];
+            $loc = $_POST['locInput'];
+            $req = $_POST['request'];
+            $cart = isset($_COOKIE["cart"]) ? $_COOKIE["cart"] : "[]";
+		    $cart = json_decode($cart);
             
-            checkout($conn, $usersID, $delMethod, $delFee, $totalPrice);
+            submitForm($conn, $name, $contact, $date, $time, $loc, $cart, $req);
         }
-        else if (isset($_POST["dlvy-method"])) {
-            $usersID = $_POST["userId"];
-            $dlvy = $_POST['dlvy-method'];
+        else if (isset($_POST["editPkg"])) {
+            $pkgId = $_POST["packageId"];
 
-            getDeliveryMethod($conn, $usersID, $dlvy);
+            editPackageMethod($pkgId);
 
             header("location: ../PHP/public/cart.php?delivery");
             exit();
         }
         else if (isset($_POST["close"])) {
 
-            $prodId = $_POST["prodId"];
-            $cartId = $_POST["cartId"];
-            $usersID = $_POST["userId"];
+            $pkgId = $_POST["packageId"];
+            $cart = isset($_COOKIE["cart"]) ? $_COOKIE["cart"] : "[]";
+		    $cart = json_decode($cart);
 
-            removeFromCart($conn, $cartId, $usersID, $prodId);
+            removeFromCart($pkgId, $cart);
         }
         else if (isset($_POST["qty"])) {
             $quantity = $_POST["qty"];

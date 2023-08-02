@@ -4,16 +4,14 @@
     margin-bottom: 50px;
   }
 
-  .catalog-header{
-    overflow-x: hidden;
-  }
-
   .row{
-    margin-top: 20px;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin: 10px, 0;
     display: flex;
     justify-content:flex-start;
+  }
+
+  .btn{
+    padding: 0.550rem .75rem;
   }
 
   .card-prods:nth-child(odd) .card-horizontal{
@@ -44,7 +42,6 @@
     height: 15vw;
     max-height: 15vw;
     background-clip: content-box, padding-box;
-    background-color: white;
     padding: 5px;
     object-fit:cover;
     border-radius: 15px;
@@ -61,7 +58,7 @@
   }
 
   .menu-btn{
-    padding: 7px 30px;
+    padding: 8px 30px;
     width: 100%;
     letter-spacing: 1px;
     margin-top: 1.25rem;
@@ -131,7 +128,6 @@
     font-size: 1.1em;
     padding: 0.4em 1.6em 0.4em 0.4em;
     border: 1px solid white;
-    /* -webkit-box-shadow: 0 2px 10px -5px rgba(0, 0, 0, 0.1); */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
@@ -144,3 +140,113 @@
     color: #282828 !important;
     background-color: #fed703 !important;
   }
+
+
+  /* Package module */
+
+  .pkg-mod{
+    background-color: #f2f2f2;
+    padding: 10px 0;
+    margin-top: 0px !important;
+  }
+
+  .col-pkg-mod{
+    align-items: center;
+    margin-top: 0 !important;
+    text-align: left;
+    font-size: 1.1em;
+  }
+
+  .pkg-img{
+    text-align: center;
+    justify-content: right;
+  }.pkg-img img{
+    width: 80px;
+    height: auto;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  .pkg-close-icon::before{
+    line-height: 1.5;
+  }
+
+  .btn-pkg-mod{
+    padding: 14px 0;
+    width: 100%;
+    letter-spacing: 1px;
+    margin: 0;
+    font-weight: 500;
+    border: 0px;
+    border-bottom-left-radius: calc(.3rem - 1px);
+    border-bottom-right-radius: calc(.3rem - 1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .pkg-btn-success{
+    color: #282828;
+    background-color: #face3f;
+  }.pkg-btn-success:hover{
+    color: #282828;
+    background-color: #fed703;
+  }
+
+.modal-body-left{
+  padding: 0;
+}
+.pkg-modal-dialog {
+    max-width: 900px;
+}
+
+.hr-modal{
+  margin: 0;
+  opacity: 0.15;
+}
+
+.pkg-form{
+  margin: 12px 0px;
+  padding: 2px 7px;
+  background-color: #fbfbfb;
+  border: 1px solid #dcd9d9;
+  border-radius: calc(.3rem - 1px)
+}
+
+.pkg-row-mod{
+  margin: 5px 0px !important;
+}
+
+.rice-check {
+  position: relative;
+  margin-top: 2.5px;
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.pax{text-align: initial;}
+.pax-input{
+  display: inline-block;
+  margin-left: 10px;
+  width: 40%;
+  height: calc(1em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.subinfo {
+  margin: 5px 0 0 0;
+  text-align: initial;
+}.subinfo p{
+  font-size: 1rem;
+  margin: 0;
+}
+
+.rf-modal{
+  border: 0;
+}

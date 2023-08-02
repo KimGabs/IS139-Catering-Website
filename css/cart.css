@@ -1,11 +1,11 @@
 #cart .title{
-    margin-bottom: 5vh;
+    margin-bottom: 1.6vh;
 }
 #cart .card{
     margin: auto;
     margin-top: 5vh;
     margin-bottom: 5em;
-    max-width: 1100px;
+    max-width: 1280px;
     width: 80%;
     background-color: #ddd;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -104,6 +104,7 @@
 }
 #cart img{
     width: 4rem;
+    border-radius: 5px;
 }
 #cart .back-to-shop{
     margin-top: 4.5rem;
@@ -166,14 +167,34 @@
     text-decoration: none;
 }
 #cart a:hover{
-    color: black;
+    color: #1664cb;
     text-decoration: none;
 }
-#cart  #code{
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253) , rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+#cart a img:hover{
+    outline: 3px solid #1664cb;
+}
+
+#cart .code{
+    background-color: white;
     background-repeat: no-repeat;
     background-position-x: 95%;
     background-position-y: center;
+    margin-left: -1px;
+    margin-bottom: 1vh;
+}
+
+.locInfo{
+    border-top: 2.5px solid rgba(0,0,0,.2); 
+    margin-top: 1vh;
+} .locInfo label{
+    margin-top: 2vh;
+}
+
+.req-row{
+    border-bottom: 1px solid rgba(0,0,0,.1); 
+    padding-bottom: 1vh;
+}.req-row p{
+    margin-bottom: 1vh;
 }
 
 #cart .qty-form{
@@ -187,4 +208,13 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+
+.edit-pkg-btn{
+    margin-top: 0 !important;
+}
+
+#cart .inputInfo{
+    margin-bottom: 3px;
 }

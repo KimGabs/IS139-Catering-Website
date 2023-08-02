@@ -1,8 +1,6 @@
 <?php
 
-if (isset($_POST["submit"])) {
-    
-
+if (isset($_POST["submitLogin"])) {
     $username = $_POST["uid"];
     $pwd = $_POST["pwd"];
     $username = strtolower($username);
@@ -19,6 +17,7 @@ if (isset($_POST["submit"])) {
 }
 
 else{
-    header("location: ../PHP/public/entry/login.php");
+    echo '<script>console.log("Else: login error")</script>';
+    header("location: ../PHP/public/entry/login.php?postMethod=Failed");
     exit();    
 }

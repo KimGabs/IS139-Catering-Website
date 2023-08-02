@@ -1,12 +1,19 @@
 <?php
 	session_start();
 	//initialize cart if not set or is unset
-	if (!isset($_COOKIE['cart']) or !isset($_COOKIE['package'])) {
-		$cart = array();
+	if (!isset($_COOKIE['package'])) {
 		$package = array();
-		setcookie('cart', json_encode($cart), time() + (86400 * 30), '/'); // Cookie expires in 30 days
+		echo "<script>console.log('Package cookie is not set...');</script>";
 		setcookie('package', json_encode($package), time() + (86400 * 30), '/'); // Cookie expires in 30 days
-	}else{
+	}
+	else if(!isset($_COOKIE['cart'])){
+		$cart = array();
+		echo "<script>console.log('Cart cookie is not set...');</script>";
+		setcookie('cart', json_encode($cart), time() + (86400 * 30), '/'); // Cookie expires in 30 days
+	}
+	else{
+		$cart = isset($_COOKIE["cart"]) ? $_COOKIE["cart"] : "[]";
+		$cart = json_decode($cart);
 		$package = isset($_COOKIE["package"]) ? $_COOKIE["package"] : "[]";
 		$package = json_decode($package);
 	}
@@ -19,10 +26,8 @@
 	<title>CROMS Catering</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../css/login-form.css">
@@ -35,6 +40,11 @@
 </head>
 <body>
 <header>
+<?php
+    // if(!isset($_COOKIE['package'])) {
+    //     echo "<p style='text-align: center; background-color: whitesmoke;'>Please turn on your cookies! Cart and package will not work without cookies...</p>";
+    // }
+?>
 <nav class="navbar navbar-expand-md navbar-dark">
 	<div class="container-fluid">
 		<a class="navbar-brand d-md-none" href="#">
