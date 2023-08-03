@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2023 at 04:03 PM
+-- Generation Time: Aug 03, 2023 at 04:45 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.2
 
@@ -35,6 +35,14 @@ CREATE TABLE `inquiries` (
   `message` text NOT NULL,
   `submission_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inquiries`
+--
+
+INSERT INTO `inquiries` (`inquiryId`, `senderName`, `email`, `subject`, `message`, `submission_date`) VALUES
+(1, 'Ryo Sumiyoshi', 'Kawasaki24@gmail.com', 'Mitsubishi', 'Honda, Mitsubishi, Fujitsu, Sushimi, Kawasaki, Canon, Samurai', '2023-08-03 10:59:17'),
+(2, 'Mark Jonas', 'Jonas@mymail.com', 'Request for new flavor', 'Please add a new flavor to your dessert category. I&#039;m tired of eating the same dessert everyday. Thanks', '2023-08-03 11:00:54');
 
 -- --------------------------------------------------------
 
@@ -105,6 +113,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`usersID`, `usersName`, `usersEmail`, `usersUid`, `usersPwd`, `user_type`) VALUES
+(9, 'John Doe', 'johndoe@aol.com', 'jdoe12', '$2y$10$APbT1w6lUskEM7zyyhG1w.MdwV.Ea6g4g0S/Q7vWGBuqd/8/gpyc6', 'admin'),
+(10, 'Snoop Dogg', 'admin01@croms.com', 'admin', '$2y$10$qBovuIgTIR1dpsoAmWmn5OQ0.7sidFxn66MF2Z/TDFIxXKR3HcekK', 'admin');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -148,7 +164,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `inquiries`
 --
 ALTER TABLE `inquiries`
-  MODIFY `inquiryId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inquiryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -172,7 +188,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `usersID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
