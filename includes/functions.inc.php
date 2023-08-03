@@ -488,7 +488,6 @@ function updateOrderStatus($conn, $orderid, $newStatus, $oldStatus){
 }
 
 function updateProducts($conn, $userid, $prodid, $name, $desc, $prodCategory, $price, $quantity){
-
   $stmt = $conn->prepare("SELECT user_type FROM users WHERE usersID = ?");
   $stmt->bind_param("i", $userid);
   $stmt->execute();
@@ -508,6 +507,22 @@ function updateProducts($conn, $userid, $prodid, $name, $desc, $prodCategory, $p
     header("location: ../PHP/admin/manageProducts.php?updateProduct=Sucess");
     exit();
   }
+}
+
+function updateOrderInfo($conn, $orderId, $cxName, $eventDate, $eventTime, $contactNo, $eventLocation, $request){
+    if($_SESSION["userType"] == 'admin'){
+          header("location: ../PHP/index.php?error=nonAdmin");
+          exit();
+    }
+    else{ 
+      // Update the product table
+      $query = "UPDATE orders SET cxName=?, eventDate=?, eventTime=?, contactNo=?, eventLocation=?, request=? WHERE orderId = ?";
+      $stmt2 = $conn->prepare($query);
+      $stmt2->bind_param("ssssssi", $cxName, $eventDate, $eventTime, $contactNo, $eventLocation, $request, $orderId);
+      $stmt2->execute();
+      header("location: ../PHP/admin/manageOrders.php?updateOrderInfo=success");
+      exit();
+    }
 
 }
 

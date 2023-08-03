@@ -180,6 +180,10 @@ function submitOrder(){
   document.getElementById("orderForm").submit();
 }
 
+function submitEditOrder(id){
+  document.getElementById("editOrderForm-" + id).submit();
+}
+
 $(function(){
   $('#datepicker').datepicker();
 });

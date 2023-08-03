@@ -11,11 +11,10 @@ h2 {
       border-top: none;
       border-bottom: none !important; }
     .custom-table tbody th, .custom-table tbody td {
-      color: #777;
+      color: #363844;
       font-weight: 400;
       padding-bottom: 20px;
-      padding-top: 20px;
-      font-weight: 300; }
+      padding-top: 20px; }
       .custom-table tbody th small, .custom-table tbody td small {
         color: #b3b3b3;
         font-weight: 300; }
@@ -44,7 +43,10 @@ h2 {
       background: transparent !important;
       }
     .custom-table .btn-others{
-      background-color:#1664cb;
+      background-color:#0D98BA;
+      color: white;
+    }.custom-table .btn-others:hover{
+      background-color:#17b7df;
       color: white;
     }
   
@@ -60,7 +62,7 @@ h2 {
     border-radius: 4px;
     display: inline-block;
     font: inherit;
-    padding: 0.2em 0.5em 0.2em 0.1em;
+    padding: 0.4em 0.5em 0.4em 0.1em;
   }
   
   button.status{
