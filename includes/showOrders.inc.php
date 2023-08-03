@@ -6,7 +6,7 @@
 		require_once '../../includes/functions.inc.php';
 
 			// query to select all columns from orders and order_items table
-			$query = "SELECT * FROM orders ORDER BY orderId ASC";
+			$query = "SELECT * FROM orders ORDER BY orderDate DESC";
 
 			$result = mysqli_query($conn, $query);
 
@@ -41,6 +41,9 @@
 							if ($row['orderStatus'] == 'processing'){
 								echo "<option value='processing' selected='selected'>Processing</option>";
 							}else{echo "<option value='processing'>Processing</option>";}
+							if ($row['orderStatus'] == 'ongoing'){
+								echo "<option value='ongoing' selected='selected'>Ongoing</option>";
+							}else{echo "<option value='ongoing'>Ongoing</option>";}
 							if ($row['orderStatus'] == 'completed'){
 								echo "<option value='completed' selected='selected'>Completed</option>";
 							}else{echo "<option value='completed'>Completed</option>";}
@@ -63,16 +66,16 @@
 											<th style='text-align: center;'>Order Date</th>
 											<th>Contact Number</th>	
 											<th>Location of Event</th>	
-											<th>Request</th>	
-
+											<th>Request</th>
 										</tr>
 									</thead>	
 							<tbody>	
 								<tr data-toggle='collapse'  class='accordion-toggle'>
-									<td style='text-align: center;'>" . $date . "</td>
-									<td style='text-transform: capitalize;'>". $row['contactNo'] . "</td>	
-									<td style='text-transform: capitalize;'>". $row['eventLocation'] . "</td>
-									<td style='text-transform: capitalize;'>" . $row['request'] . "</td>
+									<td class='col-md-2' style='text-align: center;'>" . $date . "</td>
+									<td class='col-md-2' style='text-transform: capitalize;'>". $row['contactNo'] . "</td>	
+									<td class='col-md-3'>". $row['eventLocation'] . "</td>
+									<td class='col-md-5' style='word-wrap: break-word;min-width: 160px;max-width: 160px;line-height: 1.3em;'>" . $row['request'] . "</td> 
+									
 								</tr>
                       		</tbody>
               			</table>
@@ -92,14 +95,13 @@
 						while($row2 = mysqli_fetch_assoc($result2)) {
 							$totallProdPrice = ($row2["prodPrice"] * $row2["pax"]);
 							if($row2["rice"] == "on"){
-								$riceStmt = "(With rice)";
-								$ricePrice = 10;
-							}else{
-								$riceStmt = "";
-							}
-
-							$rows .= "<div class='row'><div class='col-md-3'>" . $row2["pkgId"] . " " . $riceStmt . "</div><div class='col-md-4'>" . $row2["prodName"] . "</div>
-							<div class='col-md-2'>" . $row2["pax"] . "</div><div class='col-md-2'>₱" . number_format($totallProdPrice, 2, '.', ',') . "</div></div>";
+								$riceStmt = "Yes";
+							}else{$riceStmt = "No";}
+							
+							$rows .= "<div class='row'><div class='col-2' style='text-align:center;'>" . $row2["pkgId"] . "</div><div class='col-1'>" . $riceStmt . "</div>
+							<div class='col-3'>" . $row2["prodName"] . "</div><div class='col-1'>" . $row2["pax"] . "</div>
+							<div class='col-2'>₱" . number_format($totallProdPrice, 2, '.', ',') . "</div>
+							<div class='col-2'>₱" . number_format($row2['pkgTotal'], 2, '.', ',') . "</div></div>";
 						}
 					} else {
 						$rows .= "<tr><td colspan='3'>No items found.</td></tr>";
@@ -107,25 +109,27 @@
 					// Generate modal HTML
 					$table = "<div>
 					<div class='row'>
-							<div class='col-md-3'>Package ID</div>
-							<div class='col-md-4'>Product Name</div>
-							<div class='col-md-2'>PAX</div>
-							<div class='col-md-2'>Price</div>
+							<div class='col-2' style='font-weight:bold;text-align:center;'>Package ID</div>
+							<div class='col-1' style='font-weight:bold;'>Rice</div>
+							<div class='col-3' style='font-weight:bold;'>Product Name</div>
+							<div class='col-1' style='font-weight:bold;'>PAX</div>
+							<div class='col-2' style='font-weight:bold;'>Price</div>
+							<div class='col-2' style='font-weight:bold;'>Package Price</div>
 					</div>
 						$rows
 					</div>";
 					$modal = '<div class="modal fade" id="myModal' . $row["orderId"] . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog" style="min-width: 640px!important;">
+						<div class="modal-dialog" style="min-width: 1100px!important;">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h3 class="modal-title" id="myModalLabel" style="margin: 0">Order Items</h3>
-									<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" style="border: none;background-color: transparent;">×</button>
 								</div>
 								<div class="modal-body">
 									' . $table . '
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn" data-dismiss="modal" style="color: white; background-color: #212529">Close</button>
+									<button type="button" class="btn col-12" data-dismiss="modal" style="color: white; background-color: #212529">Close</button>
 								</div>
 							</div>
 						</div>
@@ -201,9 +205,6 @@ function displayMyOrders($userid){
 						case 'processing':
 							echo '<h6 value="processing">processing</h6>';
 							break;
-						case 'shipped':
-							echo '<h6 value="shipped" style="color:#faa00f;">shipped</h6>';
-							break;
 						case 'completed':
 							echo '<h6 value="completed" style="color:#16be16;">completed</h6>';
 							break;
@@ -229,7 +230,7 @@ function displayMyOrders($userid){
 			if (mysqli_num_rows($result2) > 0) {
 				while($row2 = mysqli_fetch_assoc($result2)) {
 					$rows .= "<div class='row prod-row align-items-center pb-2 mb-2'><div class='col prod-image'><img src='" . $row2['prodImage'] . "' alt='prodImage-" . $row["orderId"] . "
-					'></img></div><div class='col'>" . $row2["prodName"] . "</div><div class='col'>Qty: " . $row2["quantity"] . "</div><div class='col-4'>Price: ₱" . $row2["price"] . "</div></div>";
+					'></img></div><div class='col'>" . $row2["prodName"] . "</div><div class='col'>Qty: " . $row2["quantity"] . "</div><div class='col'>Price: ₱" . $row2["price"] . "</div></div>";
 				}
 			} else {
 				$rows .= "<tr><td colspan='3'>No items found.</td></tr>";

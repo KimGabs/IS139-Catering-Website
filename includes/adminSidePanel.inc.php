@@ -33,12 +33,16 @@ echo '<div class=\'container-fluid\'>
                             </div>
                     </li>
                     <li>
-                        <a href=\'#\' class=\'nav-link px-0 align-middle\'>
+                        <a href=\'../admin/eventCalendar.php\' class=\'nav-link px-0 align-middle\'>
                             <i class=\'fs-4 bi-calendar-event\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Events Calendar</span> </a>
                     </li>
                     <li>
                         <a href=\'addProduct.php\' class=\'nav-link px-0 align-middle\'>
                             <i class=\'fs-4 bi-plus-circle\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Add New Item</span> </a>
+                    </li>
+                    <li>
+                        <a href=\'../admin/inquiries.php\' class=\'nav-link px-0 align-middle\'>
+                            <i class=\'fs-4 bi-question-circle\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Inquiries</span> </a>
                     </li>
                 </ul>
             </div>

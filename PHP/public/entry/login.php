@@ -12,7 +12,7 @@
                 <form action="../../../includes/login.inc.php" method="post">
                     <input type="text" name="uid" placeholder="Username/Email">
                     <input type="password" name="pwd" placeholder="Password">
-                    <button type="submit" name="submitLogin">Log In</button>
+                    <button class="btn submit-login-btn" type="submit" name="submitLogin">Log In</button>
                 </form>
             </div>
             <?php

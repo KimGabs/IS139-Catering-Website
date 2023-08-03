@@ -13,7 +13,7 @@ body {
     position: relative;
     min-height: 100vh;
     display: flex;
-    background-color: whitesm;
+    background: linear-gradient(to bottom, #ffffff, #e2e2e2); 
     flex-direction: column;
 }  
 

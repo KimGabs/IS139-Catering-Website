@@ -364,46 +364,60 @@ function updateOrderItem($conn, $name, $cart){
         $orderId = $row['orderId'];
     }
 
-    session_start();
     $sql = "SELECT * FROM products";
     $result2 = mysqli_query($conn, $sql);
     $pkg_count = 0;
-    foreach($cart as $pkg){
+    foreach ($cart as $pkg) {
         $pkg_count++;
-        foreach($pkg as $item){
-            $total = 0;
+        $prodPrice = 0; // Initialize the $prodPrice outside the loop
+        $pax = 0; // Initialize the $pax outside the loop
+        $pkgTotal = 0;
+        $ricePrice = 0;
+        foreach ($pkg as $item) {
+            if (isset($item->rice)) {
+                $rice = $item->rice;
+                if ($rice == "on"){
+                    $ricePrice = 10;
+                }else{$ricePrice = 0;}
+            }
+            if (isset($item->pax)) {
+                $pax = $item->pax;
+            }
+        }
+        foreach ($pkg as $item) {
             if (isset($item->prodId)) {
-                mysqli_data_seek($result2, 0); // Reset the pointer to the beginning of $result
+                mysqli_data_seek($result2, 0);
                 while ($row = mysqli_fetch_assoc($result2)) {
-                    if ($item->prodId == $row["prodId"]){
-                        $total += $row['prodPrice'];
-                        $stmt = $conn->prepare("INSERT INTO order_items (orderId, pkg_id, prodId) VALUES (?, ?, ?)");
-                        $stmt->bind_param("iii", $orderId, $pkg_count, $row['prodId']);
-                        $prodId = $row['prodId'];
-                        $prodPrice = $row['prodPrice'];
-                        $stmt->execute();
-                        $stmt->close();
+                    if ($item->prodId == $row["prodId"]) {
+                        $pkgTotal += $row['prodPrice'];
                     }
                 }
             }
-            if (isset($item->rice)) {
-                $rice = $item->rice;
-                if($item->rice == "on"){
-                    $ricePrice = 10;
-                }else{$ricePrice = 0;}
-            }if(isset($item->pax)){
-                $pax = $item->pax;
-            }   
+        }
+        $pkgTotal = ($pkgTotal * $pax) + ($pax * $ricePrice);
+        foreach ($pkg as $item) {
+            if (isset($item->prodId)) {
+                mysqli_data_seek($result2, 0);
+                while ($row = mysqli_fetch_assoc($result2)) {
+                    if ($item->prodId == $row["prodId"]) {
+                        $prodid = $row['prodId'];
+                        $prodPrice = $row['prodPrice'];
+                        $stmt = $conn->prepare("INSERT INTO order_items (orderId, pkgId, prodId) VALUES (?, ?, ?)");
+                        $stmt->bind_param("iii", $orderId, $pkg_count, $row['prodId']);
+                        $stmt->execute();
+                    }
+                }
+            } 
             $subtotal = $prodPrice * $pax;
-            $stmt = $conn->prepare("UPDATE order_items SET rice = ?, pax = ?, total = ? WHERE orderId = ? AND pkg_id = ? AND prodId = ?");
-            $stmt->bind_param("sidiii", $rice, $pax, $subtotal, $orderId, $pkg_count, $prodId);
+            $stmt = $conn->prepare("UPDATE order_items SET rice = ?, pax = ?, total = ?, pkgTotal = ? WHERE orderId = ? AND pkgId = ? AND prodId = ?");
+            $stmt->bind_param("siddiii", $rice, $pax, $subtotal, $pkgTotal, $orderId, $pkg_count, $prodid);
             $stmt->execute();
             $stmt->close();
         }
-
-
-    
+        
     }
+    $emptyCart = [];
+    // setcookie('cart', json_encode($emptyCart), time() + (86400 * 30), '/'); // Set the cookie to expire in 30 days
     return;
 }
 
@@ -418,37 +432,10 @@ function emptyAddress($contactNo, $address, $postal, $city){
     return $result;
 }
 
-// Finalize Purchase
-function placeOrder($conn, $usersID, $address, $postal, $city, $contactNo){
-
-    // Completes the order table
-    // fillOrder($conn, $usersID, $address, $postal, $city, $contactNo);
-    
-    // Inserts into order_item table
-    // $orderid = updateOrderItem($conn, $usersID);
-
-    // Clear the cart for this user
-    // clearCart($conn, $usersID);
-
-    // Updates order status 
-    // promotePendingStatus($conn, $usersID, $orderid);
-
-    // header("location: ../PHP/index.php?orderSubmit=success");
-    // exit();
-}
-
 function fillOrder($conn, $usersID, $address, $postal, $city, $contactNo){
     $stmt = $conn->prepare("UPDATE orders SET shippingAddress = ?, postal = ?, city = ?, 
     contactNo = ? WHERE usersId= ? AND orderStatus='pending'");
     $stmt->bind_param("ssssi",  $address, $postal, $city, $contactNo, $usersID);
-    $stmt->execute();
-    $stmt->close();
-    return;
-}
-
-function clearCart($conn, $usersID){
-    $stmt = $conn->prepare("DELETE FROM cart WHERE usersID = ?;");
-    $stmt->bind_param("i", $usersID);
     $stmt->execute();
     $stmt->close();
     return;

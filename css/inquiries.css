@@ -1,0 +1,22 @@
+.row-inq{
+    margin-top: 50px;
+}
+
+.card {
+    margin-bottom: 20px;
+    cursor: pointer;
+    background-color: white;
+    transition: background-color 200ms ease-in;
+    box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+
+.card:hover{
+    /* background: linear-gradient(to bottom,  #ffffff 0%, #e2e2e2 90%, #d6d6d6 100%) !important; */
+    background-color: #f0f0f0;
+}
+
+  /* Custom CSS for the pagination */
+  .pagination {
+    justify-content: center;
+    margin-top: 20px;
+  }

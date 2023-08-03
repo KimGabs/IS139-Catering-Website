@@ -13,12 +13,11 @@
                 	</div>
 				</div>
 				<?php
-					echo "<div class='col' style='margin-bottom:1vh''>Number of Packages: " . $_SESSION['pkgCount'] . " </div>";
 					cartContent($conn, $cart);
 				?>
 			
 				<div class='back-to-shop'>
-					<a href='menu.php'>&leftarrow;<span class='text-muted'>Back to menu</span></a>		
+					<a href='menu.php'>&leftarrow;<span class='text-muted'> Back to menu</span></a>		
 				</div>
 			</div>
 				<div class="col-md-4 summary">

@@ -165,13 +165,25 @@
 #cart a{
     color: black; 
     text-decoration: none;
+    /* text-decoration: underline; */
+    text-underline-offset: 0px;
+    transition: all 200ms ease;
 }
 #cart a:hover{
-    color: #1664cb;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    color: #d7ab1a;
+}
+#cart a img{
+    outline: 0px solid #face3f;
+    width: 4rem;
+    outline-offset: -3 px;
+    transition: all 200ms ease-out;
 }
 #cart a img:hover{
-    outline: 3px solid #1664cb;
+    width: 4.8rem;
+    outline-offset: 0px;
+    outline: 4px solid #face3f;
 }
 
 #cart .code{

@@ -71,7 +71,7 @@
 			<div class="nav-link-cart col-4 d-md-block cart-icon-container">
 				<?php
 					if(!isset($_SESSION['userid'])){
-						echo "<a class='mr-3' href='cart.php'><img src='../../../img/cart.png' alt='My Cart' class='cart-icon'></a>";
+						echo "<a class='mr-3' href='../cart.php'><img src='../../../img/cart.png' alt='My Cart' class='cart-icon'></a>";
 						echo "<a href='../entry/login.php'><button type='button' class='btn btn-primary login-btn'>Login Admin</button></a>";
 					}
 					else{

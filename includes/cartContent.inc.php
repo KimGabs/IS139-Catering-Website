@@ -153,6 +153,12 @@ function getCart($result, $pkg){
         echo '<div class="col-md-7 modal-body-left">';
         $subtotal = 0.00;
         $init = 0;
+        $pax = 0;
+        foreach ($pkg as $item) {
+            if (isset($item->pax)) {
+                $pax = $item->pax;
+            }
+        }
         foreach ($pkg as $item) {
             if (isset($item->prodId)) {
                 mysqli_data_seek($result, 0); // Reset the pointer to the beginning of $result
@@ -163,10 +169,10 @@ function getCart($result, $pkg){
                             echo '<hr class="hr-modal" style="margin-top:0">';
                         }
                         echo '<div class="row pkg-mod">';
-                        echo '<div class="col-1"></div>';
+                        // echo '<div class="col-1"></div>';
                         echo '<div class="col-md-3 col-pkg-mod pkg-img"><img src="' . $row["prodImage"] . '" alt=""></div>';
                         echo '<div class="col-md-4 col-pkg-mod align-self-center">' . $row["prodName"] . "</div>";
-                        echo '<div class="col-md-4 col-pkg-mod align-self-center">₱' . $row["prodPrice"] . "</div>";
+                        echo '<div class="col-md-5 col-pkg-mod align-self-center">₱' . $row["prodPrice"] . " / ₱" . number_format(($row["prodPrice"] * $pax), 2, '.', ',') ."</div>";
                         echo '<input id="prodIdElement" type="hidden" name="prodId" value="' . $row['prodId'] . '">';
                         echo '<input id="locationElement" type="hidden" name="location" value="modal">';
                         $subtotal += $row['prodPrice'];
@@ -183,11 +189,19 @@ function getCart($result, $pkg){
                 echo '<div class="row pkg-row-mod">';
                 echo '<div class="col d-flex align-items-center">';
                 if($item->rice == "on"){$wRice = "Yes";$ricePrice = 10;}else{$wRice = "No";$ricePrice = 0;}
-                echo '<p style="margin-bottom: 8px;">With Rice?: ' . $wRice . '</p>';
+                echo '<p style="margin-bottom: 8px;">With Rice: ' . $wRice . '</p>';
                 echo '</div></div>';
                 echo '<div class="row pkg-row-mod">';
                 echo '<div class="col d-flex align-items-center">';
                 echo '<p style="margin-bottom: 8px;">PAX: ' . $item->pax . '</p>';
+                echo '</div></div>';
+                echo '<div class="row pkg-row-mod">';
+                echo '<div class="col d-flex align-items-center">';
+                echo '<p class="" style="margin-bottom: 0.5rem;">Rice: ₱' . number_format(($item->pax * $ricePrice), 2, '.', ',') . '</p>';
+                echo '</div></div>';
+                echo '<div class="row pkg-row-mod">';
+                echo '<div class="col d-flex align-items-center">';
+                echo '<p class="" style="margin-bottom: 0.5rem;">Subtotal: ₱' . number_format(($subtotal * $item->pax), 2, '.', ',') . '</p>';
                 echo '</div></div>';
                 echo '<div class="row pkg-row-mod">';
                 echo '<div class="col d-flex align-items-center">';

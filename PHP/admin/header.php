@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="../../css/profile-dropdown.css">
 	<link rel="stylesheet" href="../../css/addProduct.css">
 	<link rel="stylesheet" href="../../css/manageOrders.css">
+	<link rel="stylesheet" href="../../css/inquiries.css">
 </head>
 <body>
 <header>
@@ -38,7 +39,7 @@
 					echo "<span class='ml-2' style='color:white;font-weight:bold'>CROMS Catering</span>";
 					echo "<div class='dropdown-content'>";
 					if($_SESSION["userType"] == 'admin') {;
-					echo "<a href='#'>Admin Page</a>";
+					echo "<a href='manageOrders.php'>Admin Page</a>";
 					echo "<a href='../public/entry/register.php'>Register Admin</a>";
 					echo "<a href='../../includes/logout.inc.php'>Log out</a>";
 					}

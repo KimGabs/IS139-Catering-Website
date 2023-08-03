@@ -14,6 +14,16 @@
   margin: 0 0 0.5em;
 }
 
+.submit-login-btn{
+  background-color: #face3f !important;
+  color: black !important;
+  transition: all 0.25s ease-out !important;
+}
+
+.submit-login-btn:hover{
+  background-color: #fed703 !important;
+}
+
 .signup-form-2 input, .signup-form-2 input:focus{
     border: 1px solid gray;
     border-radius: 10px;
