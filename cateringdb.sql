@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 02, 2023 at 06:31 PM
+-- Generation Time: Aug 03, 2023 at 04:03 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.2
 
@@ -68,7 +68,8 @@ CREATE TABLE `order_items` (
   `prodId` int(11) NOT NULL,
   `pax` int(11) DEFAULT NULL,
   `rice` varchar(32) DEFAULT NULL,
-  `total` decimal(10,2) DEFAULT NULL
+  `total` decimal(10,2) DEFAULT NULL,
+  `pkgTotal` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -102,14 +103,6 @@ CREATE TABLE `users` (
   `usersPwd` varchar(128) NOT NULL,
   `user_type` varchar(20) NOT NULL DEFAULT 'admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`usersID`, `usersName`, `usersEmail`, `usersUid`, `usersPwd`, `user_type`) VALUES
-(9, 'John Doe', 'johndoe@aol.com', 'jdoe12', '$2y$10$APbT1w6lUskEM7zyyhG1w.MdwV.Ea6g4g0S/Q7vWGBuqd/8/gpyc6', 'admin'),
-(10, 'Kim Carlo', 'admin02@croms.com', 'admin', '$2y$10$qBovuIgTIR1dpsoAmWmn5OQ0.7sidFxn66MF2Z/TDFIxXKR3HcekK', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +172,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usersID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `usersID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

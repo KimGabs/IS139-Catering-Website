@@ -6,11 +6,16 @@
 	<div class="catalog-container">
 		<div class="catalog-header d-flex flex-row bd-highlight align-items-center">
 			<h1 class="p-2 bd-highlight mr-5">Menu</h1>
-			<!-- <button type="submit" name="sortProd" class="p-2 bd-highlight option" value="1" style="margin-left: 50px;"> Sort by: Name </button> -->
 			<div class="p-2 dropdown bd-highlight col-2">
 			<form action="menu.php" method="get" id="sortDescForm">
+					 <!-- Handles sorting option -->
 					<select class="form-select form-select-sm" onchange="submitSortForm(this)">
 					<?php
+						// Pagination variables
+						$results_per_page = 12; // Number of messages to display per page
+						$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+						$start_index = ($current_page - 1) * $results_per_page;
+
 						if(isset($_GET['sort'])){
 							$sortValue = $_GET['sort'];
 							if($sortValue == 1){
@@ -77,7 +82,7 @@
 					<div class="dropdown-menu" aria-labelledby="sortMenuButton" style="font-size: 20px;">
 						<button type="submit" class="dropdown-item" name="category" value="">------</button>
 					<?php
-						// Retrieve product data from the database
+						// Handles product category button
 						$sql = "SELECT DISTINCT prodCat FROM products";
 						$result = mysqli_query($conn, $sql);
 						while ($row = mysqli_fetch_assoc($result)) {
@@ -104,72 +109,74 @@
 		
     	<div class="row">
 			<?php
+				// Handles the sorting process based on product category
 				if (isset($_GET['sort']) && isset($_GET['category'])) {
 					$sortValue = $_GET['sort'];
 					$category = $_GET['category'];
 					
 					// Sort by prodName ASC
 					if ($sortValue == 1) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodName ASC";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodName ASC LIMIT $start_index, $results_per_page";
 					}
 					// Sort by prodPrice ASC
 					elseif ($sortValue == 2) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodPrice ASC";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodPrice ASC LIMIT $start_index, $results_per_page";
 					}
 					// Sort by prodName DESC
 					elseif ($sortValue == 3) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodName DESC";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodName DESC LIMIT $start_index, $results_per_page";
 					}
 					// Sort by prodPrice DESC
 					elseif ($sortValue == 4) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodPrice DESC";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodPrice DESC LIMIT $start_index, $results_per_page";
 					}
 					// No sort value specified, use category filter only
 					else {
-						$sql = "SELECT * FROM products WHERE prodCat='$category'";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' LIMIT $start_index, $results_per_page";
 					}
 				}
-				
+				// Handles the sorting process based on product info
 				else if (isset($_GET['sort'])){
 					$sortValue = $_GET['sort'];
 					if($sortValue == 1){
-						$sql = "SELECT * FROM products ORDER BY prodName ASC";
+						$sql = "SELECT * FROM products ORDER BY prodName ASC LIMIT $start_index, $results_per_page";
 					}
 					elseif($sortValue == 2){
-						$sql = "SELECT * FROM products ORDER BY prodPrice ASC";
+						$sql = "SELECT * FROM products ORDER BY prodPrice ASC LIMIT $start_index, $results_per_page";
 					}
 					elseif($sortValue == 3){
-						$sql = "SELECT * FROM products ORDER BY prodName DESC";
+						$sql = "SELECT * FROM products ORDER BY prodName DESC LIMIT $start_index, $results_per_page";
 					}
 					elseif($sortValue == 4){
-						$sql = "SELECT * FROM products ORDER BY prodPrice DESC";
+						$sql = "SELECT * FROM products ORDER BY prodPrice DESC LIMIT $start_index, $results_per_page";
 					}
 					else{
 						// Retrieve product data from the database
-						$sql = "SELECT * FROM products";
+						$sql = "SELECT * FROM products LIMIT $start_index, $results_per_page";
 					}
 				}
+				// Retrieves all products based on category
 				else if(isset($_GET['category'])){
 					if(($_GET['category']) == ""){
-						$sql = "SELECT * FROM products";
+						$sql = "SELECT * FROM products LIMIT $start_index, $results_per_page";
 					}
 					else{
 						$category = $_GET['category'];
-						$sql = "SELECT * FROM products WHERE prodCat='$category'";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' LIMIT $start_index, $results_per_page";
 					}
 				}
 				else{
-					// Retrieve product data from the database
-					$sql = "SELECT * FROM products";
+					// Retrieve all products from the database without filter
+					$sql = "SELECT * FROM products LIMIT $start_index, $results_per_page";
 					$result = mysqli_query($conn, $sql);
 				}
 
-				// Execute and Get filter result
+				
+				// Execute and filter the retrieved result
 				$result = mysqli_query($conn, $sql);
 				// Generate Bootstrap cards for each product
 				while ($row = mysqli_fetch_assoc($result)) {
 					$flag = false;
-					// echo '<p " ' . $package[''] . ' " />';
 					foreach ($package as $p)
 					{
 						if(isset($p->prodId)){
@@ -347,9 +354,33 @@
 				echo '</div>';
 				
 				// Close the database connection
-				mysqli_close($conn);
+				// mysqli_close($conn);
 			?>
 		</div>
+
+		  <!-- Pagination -->
+		  <ul class="pagination">
+			<?php
+			// Calculate the total number of pages
+			$sql_count = "SELECT COUNT(*) AS total FROM products;";
+			$result_count = mysqli_query($conn, $sql_count);
+			if (!$result_count) {
+				die("Error: " . mysqli_error($conn)); 
+			}    
+
+			$row_count = mysqli_fetch_assoc($result_count);
+			$total_pages = ceil($row_count['total'] / $results_per_page);
+
+			// Display pagination links
+			for ($i = 1; $i <= $total_pages; $i++) {
+			echo "<li class='page-item" . ($i == $current_page ? ' active' : '') . "'>";
+			echo "<a class='page-link' href='?page=$i'>$i</a>";
+			echo "</li>";
+			}
+			mysqli_close($conn);
+			?>
+		</ul>
+
 	</div>	
 	</form>
 	</main>

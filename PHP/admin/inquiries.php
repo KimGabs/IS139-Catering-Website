@@ -19,18 +19,25 @@
     while ($row = mysqli_fetch_assoc($result)) {
       $id = $row['inquiryId'];
       $title = $row['subject'];
+      $email = $row['email'];
       $senderName = $row['senderName'];
       $content = $row['message'];
       $limitedContent = substr($content, 0, 70);
+      $dateTime = new DateTime($row['submission_date']);
+      $month = $dateTime->format('m'); // 08
+      $day = $dateTime->format('d');   // 03
+      $year = $dateTime->format('Y');  // 2023
 
       // Display the message in a card
       echo "<div class='col-lg-4 col-md-6 col-sm-12'>";
       echo "<div class='card' data-toggle='modal' data-target='#messageModal-" . $id . "'>";
       echo "<div class='card-body'>
               <h5 class='card-title'><b>From:</b> $senderName</h5>
+              <h5 class='card-title'><b>Email:</b> $email</h5>
               <h5 class='card-title'><b>Subject:</b> $title</h5>
-              <p class='card-title'><b>Content:</b></p>
+              <p class='card-title' style='margin-bottom: 0'><b>Content:</b></p>
               <p class='card-text'>$limitedContent...</p>
+              <span class='card-text'>Date submitted: $day/$month/$year</span>
             </div>
           </div>
         </div>
@@ -58,14 +65,14 @@
   </div>
   
   
-  <!-- Pagination links -->
+  <!-- Pagination -->
   <ul class="pagination">
     <?php
     // Calculate the total number of pages
     $sql_count = "SELECT COUNT(*) AS total FROM inquiries;";
     $result_count = mysqli_query($conn, $sql_count);
     if (!$result_count) {
-        die("Error: " . mysqli_error($conn)); // Print the error message
+        die("Error: " . mysqli_error($conn)); 
     }    
 
     $row_count = mysqli_fetch_assoc($result_count);

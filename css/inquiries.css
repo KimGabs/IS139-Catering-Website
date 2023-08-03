@@ -11,7 +11,6 @@
   }
 
 .card:hover{
-    /* background: linear-gradient(to bottom,  #ffffff 0%, #e2e2e2 90%, #d6d6d6 100%) !important; */
     background-color: #f0f0f0;
 }
 

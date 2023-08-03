@@ -5,9 +5,12 @@
 		require_once '../../includes/database.inc.php';
 		require_once '../../includes/functions.inc.php';
 
-			// query to select all columns from orders and order_items table
-			$query = "SELECT * FROM orders ORDER BY orderDate DESC";
 
+			$results_per_page = 7; // Number of messages to display per page
+			$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+			$start_index = ($current_page - 1) * $results_per_page;
+			// query to select all columns from orders and order_items table
+			$query = "SELECT * FROM orders ORDER BY orderDate DESC LIMIT $start_index, $results_per_page";
 			$result = mysqli_query($conn, $query);
 
 			// Check if any rows were returned
@@ -140,7 +143,6 @@
 					echo "<tr class='spacer'>";
 					echo "<td colspan='100'></td>";
 					echo "</tr>";
-
 				}
 				echo "</form>";
 			} else {
@@ -149,8 +151,8 @@
 			}
 
 			// close database connection
-			mysqli_close($conn);
-			return;
+			// mysqli_close($conn);
+			return array($results_per_page, $current_page, $conn);
 	}	
 
 // for myOrders.php
