@@ -102,23 +102,21 @@
 								$riceStmt = "Yes";
 							}else{$riceStmt = "No";}
 							
-							$rows .= "<div class='row' style='border-top: 1px solid #e3e3e3;margin:5px;padding-top: 5px;'><div class='col-2 modal-td' style='text-align:center;'>" . $row2["pkgId"] . "</div><div class='col-1 modal-td'>" . $riceStmt . "</div>
-							<div class='col-3 modal-td'>" . $row2["prodName"] . "</div><div class='col-1 modal-td'>" . $row2["pax"] . "</div>
-							<div class='col-2 modal-td'>₱" . number_format($totallProdPrice, 2, '.', ',') . "</div>
-							<div class='col-2 modal-td'>₱" . number_format($row2['pkgTotal'], 2, '.', ',') . "</div></div>";
+							$rows .= "<div class='row'><div class='col-2' style='text-align:center;'>" . $row2["pkgId"] . "</div><div class='col-1'>" . $riceStmt . "</div>
+							<div class='col-3'>" . $row2["prodName"] . "</div><div class='col-1'>" . $row2["pax"] . "</div>
+							<div class='col-2'>₱" . number_format($totallProdPrice, 2, '.', ',') . "</div>
+							<div class='col-2'>₱" . number_format($row2['pkgTotal'], 2, '.', ',') . "</div></div>";
 						}
 					} else {
 						$rows .= "<tr><td colspan='3'>No items found.</td></tr>";
 					}
 					// Generate modal HTML
 					$table = "<div>
-					<div class='row' style='margin-bottom:5px;'>
-							<div class='col-2 modal-th' style='font-weight:bold;text-align:center;'>Package ID</div>
-							<div class='col-1 modal-th' style='font-weight:bold;padding-left: 11px !important;'>Rice</div>
-							<div class='col-3 modal-th' style='font-weight:bold;'>Product Name</div>
-							<div class='col-1 modal-th' style='font-weight:bold;'>PAX</div>
-							<div class='col-2 modal-th' style='font-weight:bold;margin-right: -10px;'>Price</div>
-							<div class='col-2 modal-th' style='font-weight:bold;'>Package Price</div>
+					<div class='row'>
+							<div class='col-2' style='font-weight:bold;text-align:center;'>Package ID</div>
+							<div class='col-1' style='font-weight:bold;'>Rice</div>
+							<div class='col-3' style='font-weight:bold;'>Product Name</div>
+							<div class='col-2' style='font-weight:bold;'>Price</div>
 					</div>
 						$rows
 					</div>";
@@ -129,7 +127,7 @@
 									<h3 class="modal-title" id="myModalLabel" style="margin: 0">Order Details</h3>
 									<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" style="border: none;background-color: transparent;">×</button>
 								</div>
-								<div class="modal-body" style="padding-bottom:0px;">
+								<div class="modal-body">
 									' . $table . '
 								</div>
 								<div class="modal-footer">

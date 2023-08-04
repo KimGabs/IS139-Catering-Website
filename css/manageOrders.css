@@ -141,7 +141,19 @@ h2 {
     background-color: #c1c1c1;
     color: white;
   }
-  
+
+
+
+.modal-td{
+  text-align: left;
+  padding-left: 2px;
+  padding-right: 50px;
+}
+
+.modal-th{
+  padding-left:  0px;
+}
+
   /* My Orders2 */
   
   .container-orders .card{
