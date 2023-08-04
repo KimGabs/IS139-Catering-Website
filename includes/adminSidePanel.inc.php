@@ -48,6 +48,10 @@ echo '<div class=\'container-fluid\'>
                         <a href=\'../admin/inquiries.php\' class=\'nav-link px-0 align-middle\'>
                             <i class=\'fs-4 bi-envelope\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Inquiries</span> </a>
                     </li>
+                    <li>
+                        <a href=\'../admin/inventory.php\' class=\'nav-link px-0 align-middle\'>
+                            <i class=\'fs-4 bi-minecart\'></i> <span class=\'ms-1 d-none d-sm-inline\'>Inventory</span> </a>
+                    </li>
                 </ul>
             </div>
         </div>';

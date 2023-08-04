@@ -6,7 +6,7 @@
 		require_once '../../includes/functions.inc.php';
 
 
-			$results_per_page = 12; // Number of messages to display per page
+			$results_per_page = 8; // Number of messages to display per page
 			$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 			$start_index = ($current_page - 1) * $results_per_page;
 			// query to select all columns from orders and order_items table

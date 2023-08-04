@@ -8,7 +8,7 @@ h1 {font-weight: 700;}
 
 
 body {
-    overflow-y: hidden;
+    overflow-y: scroll;
     margin: 0;
     position: relative;
     min-height: 100vh;
@@ -177,3 +177,133 @@ footer .col a:hover{
   padding: 0;
   display: block;
 }
+
+.mid{
+  margin-bottom: 100px;
+}
+
+.div-post-text{
+  align-self: center;
+  text-align:justify;
+}
+
+#title-name{
+  margin-left: -10px !important;
+  font-size: 3em;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.index-text{
+  line-height: 2.5em;
+  font-size: 1.2em;
+}
+
+.post-pic{
+  width: 350px;
+  height: auto;
+  outline-offset: 10px;
+  outline: 5px solid #303030;
+}
+
+.div-post-pic{
+  align-self: center;
+  text-align: center;
+}
+
+/*  */
+.name-small-row {
+  margin-top: 30px;
+}
+
+.name-small {
+	font-size: 14px;
+	color: #8f8f8f;
+  display: table;
+  height: 70px;
+}
+
+.name-small a {
+   display: table-cell;
+   vertical-align: middle;
+}
+
+.thumb {
+	max-width: 150px;
+	width: 70px;
+	height: 70px;
+	background-position: left!important;
+  float: right;
+	background-size: cover!important;
+	border-radius: 100%
+}
+
+.thumb1 {
+	background: url(https://api.tunereel.com/wp-content/uploads/2021/01/DSC_3259_s-min.jpg) 50% 50% no-repeat
+}
+
+.thumb2 {
+	background: url(https://api.tunereel.com/wp-content/uploads/2021/02/sol-e1614106510112.jpg) 50% 50% no-repeat;
+	background-position: right bottom !important;
+}
+
+.thumb3 {
+	background: url(https://api.tunereel.com/wp-content/uploads/2021/05/gal-ziv-min.jpg) 50% 50% no-repeat;
+	background-position: right top !important;
+}
+
+.col-md-12 h2 {
+	font-weight: 600
+}
+
+.quote {
+	color: rgba(0, 0, 0, .1);
+	margin-bottom: 10px;
+	margin-top: 50px
+}
+
+.quote:before {
+	position: absolute;
+	font-family: FontAwesome;
+  top: -30px;
+  left: -35px;
+  content: "\f10d";
+  font-size: 100px;
+  color: rgba(247, 247, 247, 0.4);
+}
+
+blockquote {
+	border: none;
+	font-weight: 500;
+	font-size: 16px;
+	padding: 0!important
+}
+
+.testimonial-p{
+  color: #fcfcfc;
+  font-size: 1.2em;
+}
+
+.testimonial-container {
+	padding: 40px 0 60px 0;
+  background: linear-gradient(to bottom, #464646, #303030); 
+}
+
+.testimonial-text p {
+  min-height: 168px;
+}
+
+@media (max-width:760px){
+  .testimonial-text p {
+    min-height: unset;
+  }
+  .name-small {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .thumb {
+    float: none;
+    margin: 0 auto;
+  }
+}
+
+

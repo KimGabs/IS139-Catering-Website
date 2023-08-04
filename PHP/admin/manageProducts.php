@@ -27,27 +27,26 @@
 									</tbody>
 								</table>
 								<?php
+									echo "<ul class='pagination'>";
+									// Calculate the total number of pages
+									$sql_count = "SELECT COUNT(*) AS total FROM products;";
+									$result_count = mysqli_query($conn, $sql_count);
+									if (!$result_count) {
+										die("Error: " . mysqli_error($conn)); 
+									}    
 
-								// 	echo "<ul class='pagination'>";
-								// 	// Calculate the total number of pages
-								// 	$sql_count = "SELECT COUNT(*) AS total FROM orders;";
-								// 	$result_count = mysqli_query($conn, $sql_count);
-								// 	if (!$result_count) {
-								// 		die("Error: " . mysqli_error($conn)); 
-								// 	}    
+									$row_count = mysqli_fetch_assoc($result_count);
+									$total_pages = ceil($row_count['total'] / $var1);
 
-								// 	$row_count = mysqli_fetch_assoc($result_count);
-								// 	$total_pages = ceil($row_count['total'] / $var1);
-
-								// 	// Display pagination links
-								// 	for ($i = 1; $i <= $total_pages; $i++) {
-								// 	echo "<li class='page-item" . ($i == $var2 ? ' active' : '') . "'>";
-								// 	echo "<a class='page-link' href='?page=$i'>$i</a>";
-								// 	echo "</li>";
-								// 	}
-								// 	echo "</ul>";
-								// 	mysqli_close($conn);
-								// ?>
+									// Display pagination links
+									for ($i = 1; $i <= $total_pages; $i++) {
+									echo "<li class='page-item" . ($i == $var2 ? ' active' : '') . "'>";
+									echo "<a class='page-link' href='?page=$i'>$i</a>";
+									echo "</li>";
+									}
+									echo "</ul>";
+									mysqli_close($conn);
+								?>
 							</div>
 						</div> 
 					</div>

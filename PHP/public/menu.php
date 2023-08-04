@@ -12,7 +12,7 @@
 					<select class="form-select form-select-sm" onchange="submitSortForm(this)">
 					<?php
 						// Pagination variables
-						$results_per_page = 12; // Number of messages to display per page
+						$results_per_page = 9; // Number of messages to display per page
 						$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 						$start_index = ($current_page - 1) * $results_per_page;
 
@@ -74,7 +74,7 @@
 					</select>
 				</form>
 			</div>
-			<div class="p-2 dropdown bd-highlight col-md-3 col-sm-2" style="font-size: 20px;">
+			<div class="p-2 dropdown bd-highlight col-md-2 col-sm-2 mr-5" style="font-size: 20px;">
 				<form action="menu.php" method="get">
 				<button class="btn btn-secondary dropdown-toggle" type="button" id="sortMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 0px; border-radius:5px; font-weight:500;">
 					<i class="bi bi-funnel" style="margin-right:5px;"></i>Product Category
@@ -92,6 +92,7 @@
 					</div>
 				</form>
 			</div>
+			<div class="col-md-1 col-sm-0" style="font-size: 20px;margin-left:-80px;"></div>
 			<div class="p-2 bd-highlight col-0" style="font-size: 20px;">
 			<?php
 			if($package == null){
