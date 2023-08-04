@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 03, 2023 at 04:45 PM
+-- Generation Time: Aug 04, 2023 at 04:06 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.1.2
 
@@ -43,6 +43,19 @@ CREATE TABLE `inquiries` (
 INSERT INTO `inquiries` (`inquiryId`, `senderName`, `email`, `subject`, `message`, `submission_date`) VALUES
 (1, 'Ryo Sumiyoshi', 'Kawasaki24@gmail.com', 'Mitsubishi', 'Honda, Mitsubishi, Fujitsu, Sushimi, Kawasaki, Canon, Samurai', '2023-08-03 10:59:17'),
 (2, 'Mark Jonas', 'Jonas@mymail.com', 'Request for new flavor', 'Please add a new flavor to your dessert category. I&#039;m tired of eating the same dessert everyday. Thanks', '2023-08-03 11:00:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -93,6 +106,7 @@ CREATE TABLE `products` (
   `prodCat` varchar(128) DEFAULT NULL,
   `prodPrice` decimal(10,2) NOT NULL,
   `prodImage` varchar(512) DEFAULT NULL,
+  `prodStatus` varchar(128) DEFAULT 'draft',
   `prodCreated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `prodUpdated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -131,6 +145,12 @@ ALTER TABLE `inquiries`
   ADD PRIMARY KEY (`inquiryId`);
 
 --
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -165,6 +185,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `inquiries`
   MODIFY `inquiryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`

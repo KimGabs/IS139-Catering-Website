@@ -14,7 +14,34 @@ console.log("Hello, Script.js is running!");
     };
   }
 
+  const imageInputs = document.querySelectorAll('[data-prod-id]');
 
+  imageInputs.forEach(imageInput => {
+    const prodId = imageInput.dataset.prodId;
+    const imagePreview = document.querySelector('.preview-' + prodId);
+    const cancelButton = document.querySelector('.cancel-btn-' + prodId);
+    cancelButton.textContent = 'Cancel';
+  
+    // Store the original image URL and texts
+    const originalImageSrc = imagePreview.src;
+  
+    if (imageInput !== null) {
+      imageInput.onchange = evt => {
+        const [file] = imageInput.files;
+        if (file) {
+          imagePreview.src = URL.createObjectURL(file);
+        }
+      };
+    }
+
+    // Add a click event listener to the cancel button for each set
+  cancelButton.addEventListener('click', () => {
+    // Revert back to the original image URL
+    imagePreview.src = originalImageSrc;
+    // Clear the selected file from the input field
+    imageInput.value = '';
+  });
+});
 
   try{
     var myModal = new bootstrap.Modal(document.getElementById('pkgwindow'), {});
@@ -24,15 +51,15 @@ console.log("Hello, Script.js is running!");
   }
  
   try{
-    var myModal = new bootstrap.Modal(document.getElementById('addToCartWindow'), {})
-    myModal.toggle()
+    var myModal = new bootstrap.Modal(document.getElementById('addToCartWindow'), {});
+    myModal.toggle();
   }
   catch(e){
   }
 
   try{
-    var myModal = new bootstrap.Modal(document.getElementById('inquiryWindow'), {})
-    myModal.toggle()
+    var myModal = new bootstrap.Modal(document.getElementById('inquiryWindow'), {});
+    myModal.toggle();
   }
   catch(e){
   }

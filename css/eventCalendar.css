@@ -199,7 +199,7 @@ body {
     border-collapse:separate; 
     text-align: center;
     width: -webkit-fill-available;
-    padding: 0px 17px;
+    padding: 2px 20px;
 } 
 .day { 
     height: 26px;
@@ -225,13 +225,13 @@ body {
 }
 .active-month {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 15px;
     color: #52A0FD;
-    text-shadow: 0 1px 4px rgba(52, 141, 250, 0.8)
+    text-shadow: 0 1px 2px rgba(52, 141, 250, 0.8)
 }
 .month:hover {
     color: #52A0FD;
-    text-shadow: 0 1px 4px rgba(52, 141, 250, 0.8)
+    text-shadow: 0 1px 2px rgba(52, 141, 250, 0.5)
 }
 
 /*  Dates table */
@@ -250,11 +250,11 @@ body {
 }
 .table-date:not(.nil):hover { 
     border-color: #2e2e2e;
-    box-shadow: 0 2px 3x RGB(234, 190, 1, .2);
+    box-shadow: 0 2px 4px RGB(0, 0, 0, .4);
 }
 .event-date {
     border-color:#52A0FD;
-    box-shadow: 0 1px 1px RGBA(130, 180, 255, .9);
+    box-shadow: 0 1px 5px RGBA(130, 180, 255, 10)
 }
 
 .active-date{ 

@@ -1,5 +1,9 @@
 <?php
 	include_once 'header.php';
+    if(!isset($_SESSION['userid'])){
+        header('location: ../../index.php?nonAdmin');
+        exit();
+	}
 ?>
 	<main>
 		<section class="signup-form">

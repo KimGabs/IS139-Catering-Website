@@ -166,10 +166,10 @@ function prodExists($conn, $productName) {
 // Upload image function
 function uploadProductImage($file) {
     // Get file name, type, and size
-    $filename = $_FILES['image']['name'];
-    $file = $_FILES['image'];
+    $filename = $file['name'];
     $fileType = pathinfo($filename, PATHINFO_EXTENSION);
-    $filesize = $_FILES['image']['size'];
+    $filesize = $file['size'];
+
     // file input is empty
     if (empty($filename)) { 
         header("location: ../PHP/admin/addProduct.php?error=emptyFile");
@@ -458,7 +458,7 @@ function promotePendingStatus($conn, $usersID, $orderid){
     }
 }
 
-function checkStatusExist($conn, $orderid, $status) {
+function checkOrderStatusExist($conn, $orderid, $status) {
     $stmt = $conn->prepare("SELECT orderStatus FROM orders WHERE orderId=?");
     $stmt->bind_param("i", $orderid);
     $stmt->execute();
@@ -474,6 +474,22 @@ function checkStatusExist($conn, $orderid, $status) {
     }
 }
 
+function checkProdStatusExist($conn, $prodId, $status) {
+    $stmt = $conn->prepare("SELECT prodStatus FROM products WHERE prodId=?");
+    $stmt->bind_param("i", $prodId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if($row = $result->fetch_assoc()){
+        if($status != $row['prodStatus']){
+            return $row['prodStatus'];
+        }
+        else{
+            return false;
+        }
+    }
+}
+
 function updateOrderStatus($conn, $orderid, $newStatus, $oldStatus){
     if($newStatus != $oldStatus){
         $stmt = $conn->prepare("UPDATE orders SET orderStatus = ? WHERE orderId = ? AND orderStatus = ?");
@@ -482,29 +498,44 @@ function updateOrderStatus($conn, $orderid, $newStatus, $oldStatus){
         $stmt->close();   
         return;
     }else{
-        header("location: ../PHP/admin/manageOrders.php?Onchange=stmtFailed");
+        header("location: ../PHP/admin/manageOrders.php?statusChange=stmtFailed");
         exit();
     }
 }
 
-function updateProducts($conn, $userid, $prodid, $name, $desc, $prodCategory, $price, $quantity){
-  $stmt = $conn->prepare("SELECT user_type FROM users WHERE usersID = ?");
-  $stmt->bind_param("i", $userid);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $row = $result->fetch_assoc();
-
-  if(!$row['user_type'] == 'admin'){
-        header("location: ../PHP/index.php?error=nonAdmin");
+function updateProdStatus($conn, $prodId, $newStatus, $oldStatus){
+    if($newStatus != $oldStatus){
+        $stmt = $conn->prepare("UPDATE products SET prodStatus = ? WHERE prodId = ? AND prodStatus = ?");
+        $stmt->bind_param("sis", $newStatus, $prodId, $oldStatus);
+        $stmt->execute();   
+        $stmt->close();   
+        return;
+    }else{
+        header("location: ../PHP/admin/manageProducts.php?statusChange=stmtFailed");
         exit();
+    }
+}
+
+function updateProducts($conn, $prodid, $name, $image, $price, $prodCategory, $desc){
+  if($_SESSION["userType"] == 'admin'){
+    header("location: ../PHP/index.php?error=nonAdmin");
+    exit();
   }
-  else{ 
-    // Update the product table
-    $query = "UPDATE products SET prodName=?, prodDesc=?, prodPrice=?, prodCat=?, prodQty=? WHERE prodId = ?";
-    $stmt2 = $conn->prepare($query);
-    $stmt2->bind_param("ssdsii", $name, $desc, $price, $prodCategory, $quantity, $prodid);
-    $stmt2->execute();
-    header("location: ../PHP/admin/manageProducts.php?updateProduct=Sucess");
+  if (empty($image['name'])){
+      $query = "UPDATE products SET prodName=?, prodDesc=?, prodPrice=?, prodCat=?  WHERE prodId = ?";
+      $stmt = $conn->prepare($query);
+      $stmt->bind_param("ssdsi", $name, $desc, $price, $prodCategory, $prodid);
+      $stmt->execute();
+      header("location: ../PHP/admin/manageProducts.php?updateProduct=sucess");
+      exit();
+}
+else{ 
+    $imagePath = uploadProductImage($image);
+    $query = "UPDATE products SET prodName=?, prodDesc=?, prodPrice=?, prodCat=?, prodImage=? WHERE prodId = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ssdssi", $name, $desc, $price, $prodCategory, $imagePath, $prodid);
+    $stmt->execute();
+    header("location: ../PHP/admin/manageProducts.php?updateProduct=sucessImg");
     exit();
   }
 }
@@ -549,4 +580,15 @@ function invalidPax($pax) {
         $result = false;
     }
     return $result;
+}
+
+function formatTimestamp($dateString) {
+    $timestamp = strtotime($dateString);
+
+    $month = date('m', $timestamp); 
+    $day = date('d', $timestamp);   
+    $year = date('Y', $timestamp);  
+    $time12hr = date('h:i A', $timestamp); 
+
+    return array($month, $day, $year, $time12hr);
 }

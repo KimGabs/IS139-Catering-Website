@@ -41,6 +41,10 @@ function updateOrderStatus() {
   document.getElementById("orderStatus").submit();
 }
 
+function updateProdStatus(){
+  document.getElementById("prodStatus").submit();
+}
+
 $(document).ready(function(){
   $("#myModalBtn").click(function(){
       $("#myModal").modal();
@@ -182,6 +186,10 @@ function submitOrder(){
 
 function submitEditOrder(id){
   document.getElementById("editOrderForm-" + id).submit();
+}
+
+function submitEditProduct(id){
+  document.getElementById("editProdForm-" + id).submit();
 }
 
 $(function(){

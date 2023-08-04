@@ -1,6 +1,10 @@
 <?php
 	session_start();
 	//initialize cart if not set or is unset
+	if(!isset($_SESSION['userid'])){
+		header('location: ../../index.php?nonAdmin');
+	exit();
+	}
 	if (!isset($_COOKIE['cart']) and !isset($_COOKIE['package'])) {
 		$cart = array();
 		$package = array();
@@ -26,6 +30,7 @@
 	<link rel="stylesheet" href="../../css/profile-dropdown.css">
 	<link rel="stylesheet" href="../../css/addProduct.css">
 	<link rel="stylesheet" href="../../css/manageOrders.css">
+	<link rel="stylesheet" href="../../css/manageProducts.css">
 	<link rel="stylesheet" href="../../css/inquiries.css">
 </head>
 <body>

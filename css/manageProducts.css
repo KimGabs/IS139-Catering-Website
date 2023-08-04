@@ -1,0 +1,25 @@
+/* Product mgmnt */
+
+.prod-mgmnt-img{
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    width: auto;
+    height: 60px;
+  }
+  
+  .icon-status{
+    padding-right: 9px;
+    font-size: small;
+  }
+  
+  .edit-input-img{
+    margin: 20px 0px;
+    padding-left: 30px;
+  }
+
+  .edit-modal-img{
+    width:250px;
+    border: 2px solid rgb(211, 211, 211);
+    border-radius: 12px;
+  }
+  

@@ -17,13 +17,14 @@ if (isset($_POST["submit"])) {
     $productDesc = $_POST["desc"];
     $productPrice = $_POST["price"];
     $productCatergory = strtolower($_POST["category"]);
+    $image = $_FILES['image'];
 
     if(emptyInputProduct($productName, $productDesc, $productCatergory, $productPrice) !== false){
         header("location: ../PHP/admin/addProduct.php?error=emptyinput");
         exit();    
     }
 
-    $imagePath = uploadProductImage($_FILES['image']);
+    $imagePath = uploadProductImage($image);
 
     if(prodExists($conn, $productName) !== false){
         header("location: ../PHP/admin/addProduct.php?error=productNameTaken");

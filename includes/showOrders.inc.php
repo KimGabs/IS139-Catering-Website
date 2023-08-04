@@ -6,7 +6,7 @@
 		require_once '../../includes/functions.inc.php';
 
 
-			$results_per_page = 7; // Number of messages to display per page
+			$results_per_page = 12; // Number of messages to display per page
 			$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
 			$start_index = ($current_page - 1) * $results_per_page;
 			// query to select all columns from orders and order_items table
@@ -15,7 +15,7 @@
 
 			// Check if any rows were returned
 			if (mysqli_num_rows($result) > 0) {
-				echo "<form id='orderStatus' action='../../includes/manageOrder.inc.php' method='post'></form>";
+				echo "<form id='orderStatus' action='../../includes/updateStatus.inc.php' method='post'></form>";
 				// Loop through rows and print data in table cells
 				while ($row = mysqli_fetch_assoc($result)) {	
 					echo '<form id="editOrderForm-'. $row['orderId'] .'" action="../../includes/editOrder.inc.php" method="post"></form>';
@@ -32,7 +32,7 @@
 					echo "
 						<tbody>	
 						<tr class='accordion-toggle'>
-							<td><button type='button' data-toggle='collapse' data-target='#order-info-" . $row["orderId"] . "' class='btn btn-others btn-xs'>Collapse</button></td>
+							<td style='vertical-align: middle;'><button type='button' data-toggle='collapse' data-target='#order-info-" . $row["orderId"] . "' class='btn btn-others btn-xs btn-collapse'>Collapse</button></td>
 							<td style='vertical-align: middle;text-align: center;'>" . $row["orderId"] . "</td>
 							<td style='vertical-align: middle;'>" . $row["cxName"] . "</td>
 							<td style='vertical-align: middle;'>" . $row["eventDate"] . "</td>
@@ -62,14 +62,14 @@
 							echo "<td><button type='button' class='btn btn-others status' data-toggle='modal' data-target='#editOrder-" . $row["orderId"] . "'>Edit Order</button></td>";
 							echo "</tr>
 								<tr>
-									<td colspan='12' class='hiddenRow' style='background: transparent; padding: 5px 0px;'>
+									<td colspan='12' class='hiddenRow' style='background: transparent; padding: 0px;'>
 									<div class='accordion-body collapse' id='order-info-" . $row["orderId"] . "'> 
 									<table class='table table-striped table-hover'>
 									<thead>
 										<tr class='info mb-2'>
 											<th style='text-align: center;'>Order Date</th>
 											<th>Contact Number</th>	
-											<th>Location of Event</th>	
+											<th>Event Location</th>	
 											<th>Request</th>
 										</tr>
 									</thead>	
@@ -78,7 +78,7 @@
 									<td class='col-md-2' style='text-align: center;'>" . $date . "</td>
 									<td class='col-md-2' style='text-transform: capitalize;'>". $row['contactNo'] . "</td>	
 									<td class='col-md-3'>". $row['eventLocation'] . "</td>
-									<td class='col-md-5' style='word-wrap: break-word;min-width: 160px;max-width: 160px;line-height: 1.3em;'>" . $row['request'] . "</td> 
+									<td class='col-md-5' style='word-wrap: break-word;min-width: 160px;max-width: 160px;line-height: 1.3em;'>" . ucfirst($row['request']) . "</td> 
 									
 								</tr>
                       		</tbody>
@@ -102,7 +102,7 @@
 								$riceStmt = "Yes";
 							}else{$riceStmt = "No";}
 							
-							$rows .= "<div class='row' style='border-top: 1px solid #e3e3e3;margin:5px;padding-top: 5px;'><div class='col-2 modal-td' style='text-align:center;'>" . $row2["pkgId"] . "</div><div class='col-1 modal-td'>" . $riceStmt . "</div>
+							$rows .= "<div class='row pkg-row'><div class='col-2 modal-td' style='text-align:center;'>" . $row2["pkgId"] . "</div><div class='col-1 modal-td'>" . $riceStmt . "</div>
 							<div class='col-3 modal-td'>" . $row2["prodName"] . "</div><div class='col-1 modal-td'>" . $row2["pax"] . "</div>
 							<div class='col-2 modal-td'>₱" . number_format($totallProdPrice, 2, '.', ',') . "</div>
 							<div class='col-2 modal-td'>₱" . number_format($row2['pkgTotal'], 2, '.', ',') . "</div></div>";
@@ -144,7 +144,7 @@
 					<div class='d-flex justify-content-start flex-column'>
 					<div class='row'>
 						<div class='col-12'>
-							<label style='margin-bottom: 0.5rem;'>Customer Name: </label>
+							<label style='margin-bottom: 0.2rem;'>Customer Name </label>
 						</div>
 						<div class='col-12 form-group'>
 							<input form='editOrderForm-". $row['orderId'] ."' class='form-control code' name='cxName' value='" . $row["cxName"] . "' type='text' style='margin-bottom:4px; width: 100%;padding: 4px 6px;'></input>
@@ -152,37 +152,37 @@
 					</div>
 					<div class='row'>
 						<div class='col-12 form-group'>
-							<label class=''>Event Date: </label>
+							<label style='margin-bottom: 0.2rem;'>Event Date </label>
 							<input form='editOrderForm-". $row['orderId'] ."' class='form-control code' name='eventDate' value='" . $row["eventDate"] . "' type='text' style='margin-bottom:width: 100%;4px;padding: 4px 6px;'></input>
 						</div>
 					</div>
 					<div class='row'>
 						<div class='col-12 form-group'>
-							<label class='form-group'>Event Time: </label>
+							<label style='margin-bottom: 0.2rem;'>Event Time </label>
 							<input form='editOrderForm-". $row['orderId'] ."' class='form-control code' name='eventTime' value='" . $formattedTime . "' type='text' style='margin-bottom:4px; padding: 4px 6px;'></input>
 						</div>
 					</div>
 					<div class='row'>
 						<div class='col-12 form-group'>
-							<label class='form-group'>Contact Number: </label>
+							<label style='margin-bottom: 0.2rem;'>Contact Number </label>
 							<input form='editOrderForm-". $row['orderId'] ."' class='form-control code' name='contactNo' value='" . $row["contactNo"] . "' type='text' style='margin-bottom:4px;padding: 4px 6px;'></input>
 						</div>
 					</div>
 					<div class='row'>
 						<div class='col-12 form-group'>
-							<label class='form-group'>Event Location: </label>
-							<textarea form='editOrderForm-". $row['orderId'] ."' class='form-control' name='eventLocation' rows='3' required>". $row["eventLocation"] . "</textarea>
+							<label style='margin-bottom: 0.2rem;'>Event Location </label>
+							<textarea form='editOrderForm-". $row['orderId'] ."' class='form-control' name='eventLocation' style='resize: none;' rows='3' required>". $row["eventLocation"] . "</textarea>
 						</div>
 					</div>
 					<div class='row'>
 						<div class='col-12 form-group'>
-							<label class='form-group'>Special Request: </label>
-							<textarea form='editOrderForm-". $row['orderId'] ."' class='form-control' name='request' rows='3' required>". $row["request"] . "</textarea>
+							<label style='margin-bottom: 0.2rem;'>Special Request </label>
+							<textarea form='editOrderForm-". $row['orderId'] ."' class='form-control' name='request' rows='3' style='resize: none;' required>". $row["request"] . "</textarea>
 						</div>
 					</div>
-					<input form='editOrderForm-". $row['orderId'] ."' type='hidden' name='orderId' value='" . $row["orderId"] . "'></input>
+						<input form='editOrderForm-". $row['orderId'] ."' type='hidden' name='orderId' value='" . $row["orderId"] . "'></input>
 						<input form='editOrderForm-". $row['orderId'] ."' type='hidden' name='editOrder'></input>
-						</div>";
+					</div>";
 					
 					
 					// Generate Edit Order Modal HTML

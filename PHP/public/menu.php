@@ -116,58 +116,58 @@
 					
 					// Sort by prodName ASC
 					if ($sortValue == 1) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodName ASC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' AND prodStatus='active' ORDER BY prodName ASC LIMIT $start_index, $results_per_page";
 					}
 					// Sort by prodPrice ASC
 					elseif ($sortValue == 2) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodPrice ASC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' AND prodStatus='active' ORDER BY prodPrice ASC LIMIT $start_index, $results_per_page";
 					}
 					// Sort by prodName DESC
 					elseif ($sortValue == 3) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodName DESC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' AND prodStatus='active' ORDER BY prodName DESC LIMIT $start_index, $results_per_page";
 					}
 					// Sort by prodPrice DESC
 					elseif ($sortValue == 4) {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' ORDER BY prodPrice DESC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' AND prodStatus='active' ORDER BY prodPrice DESC LIMIT $start_index, $results_per_page";
 					}
 					// No sort value specified, use category filter only
 					else {
-						$sql = "SELECT * FROM products WHERE prodCat='$category' LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' AND prodStatus='active' LIMIT $start_index, $results_per_page";
 					}
 				}
 				// Handles the sorting process based on product info
 				else if (isset($_GET['sort'])){
 					$sortValue = $_GET['sort'];
 					if($sortValue == 1){
-						$sql = "SELECT * FROM products ORDER BY prodName ASC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products ORDER BY prodName AND prodStatus='active' ASC LIMIT $start_index, $results_per_page";
 					}
 					elseif($sortValue == 2){
-						$sql = "SELECT * FROM products ORDER BY prodPrice ASC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products ORDER BY prodPrice AND prodStatus='active' ASC LIMIT $start_index, $results_per_page";
 					}
 					elseif($sortValue == 3){
-						$sql = "SELECT * FROM products ORDER BY prodName DESC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products ORDER BY prodName AND prodStatus='active' DESC LIMIT $start_index, $results_per_page";
 					}
 					elseif($sortValue == 4){
-						$sql = "SELECT * FROM products ORDER BY prodPrice DESC LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products ORDER BY prodPrice AND prodStatus='active' DESC LIMIT $start_index, $results_per_page";
 					}
 					else{
 						// Retrieve product data from the database
-						$sql = "SELECT * FROM products LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products AND prodStatus='active' LIMIT $start_index, $results_per_page";
 					}
 				}
 				// Retrieves all products based on category
 				else if(isset($_GET['category'])){
 					if(($_GET['category']) == ""){
-						$sql = "SELECT * FROM products LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodStatus='active' LIMIT $start_index, $results_per_page";
 					}
 					else{
 						$category = $_GET['category'];
-						$sql = "SELECT * FROM products WHERE prodCat='$category' LIMIT $start_index, $results_per_page";
+						$sql = "SELECT * FROM products WHERE prodCat='$category' AND prodStatus='active' LIMIT $start_index, $results_per_page";
 					}
 				}
 				else{
 					// Retrieve all products from the database without filter
-					$sql = "SELECT * FROM products LIMIT $start_index, $results_per_page";
+					$sql = "SELECT * FROM products WHERE prodStatus='active' LIMIT $start_index, $results_per_page";
 					$result = mysqli_query($conn, $sql);
 				}
 

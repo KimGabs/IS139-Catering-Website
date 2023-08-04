@@ -5,13 +5,19 @@ if(isset($_POST['editProduct'])){
     require_once 'database.inc.php';
     require_once 'functions.inc.php';
 
-    $userid = $_POST['userId'];
     $prodid = $_POST['prodId'];
     $name = $_POST['prodName'];
+    $image = $_FILES['image-' . $prodid];
     $price = $_POST['prodPrice'];
-    $qty = $_POST['prodQty'];
+    $prodCategory = strtolower($_POST['prodCat']);
     $desc = $_POST['prodDesc'];
-    $prodCategory = strtolower($_POST['prodCategory']);
+    $desc_proxy = "Proxy description: false positive empty input";
+    
+    if(emptyInputProduct($name, $prodCategory, $desc_proxy, $price) !== false){
+        header("location: ../PHP/admin/manageProducts.php?error=emptyinput");
+        exit();    
+    }
+    // echo "<p>empty:" . empty($image['name']) . "</p> ";
 
-    updateProducts($conn, $userid, $prodid, $name, $desc, $prodCategory, $price, $qty);
+    updateProducts($conn, $prodid, $name, $image, $price, $prodCategory, $desc);
 }

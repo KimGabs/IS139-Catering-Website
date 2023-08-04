@@ -13,15 +13,16 @@
 									<thead>
 										<tr>
 											<th></th>
-											<th style='text-align: center;'>Product No.</th>
-											<th>Product Name</th>
+											<th style='text-align: center;'></th>
+											<th>Product</th>
 											<th>Category</th>
-											<th>Price</th>			
+											<th>Price</th>	
+                                            <th>Status</th>			
 										</tr>
 									</thead>
 									<tbody>	
 										<?php
-											list($var1, $var2, $conn) = displayOrders();
+											list($var1, $var2, $conn) = displayProducts();
 										?>
 									</tbody>
 								</table>
