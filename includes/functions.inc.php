@@ -302,7 +302,7 @@ function updateOrderItem($conn, $name, $cart){
     }
     // Check if the order already exists
     $stmt = $conn->prepare("SELECT orderId FROM orders WHERE cxName=? AND orderStatus='pending'");
-    $stmt->bind_param("i", $name);
+    $stmt->bind_param("s", $name);
     $stmt->execute();
     $result1 = $stmt->get_result();
 

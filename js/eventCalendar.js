@@ -202,11 +202,11 @@ function show_events(events, month, day) {
                 });
                 event_status = $("<div class='event-cancelled' style='padding-left:0px;'>Cancelled</div>");
             }
-            else if(events[i]["orderStatus"]==="processing") {
+            else if(events[i]["orderStatus"]==="pending") {
                 $(event_card).css({
                     "border-left": "10px solid #face3d"
                 });
-                event_status = $("<div class='event-processing' style='padding-left:0px;'>Processing</div>");
+                event_status = $("<div class='event-processing' style='padding-left:0px;'>Pending</div>");
             }
             else if(events[i]["orderStatus"]==="completed") {
                 $(event_card).css({

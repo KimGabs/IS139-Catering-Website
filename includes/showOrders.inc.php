@@ -39,9 +39,9 @@
 							echo "<td style='vertical-align: middle;'>";
 							// START OF FORM
 							echo "<select form='orderStatus' class='status' name='changeOrderStatus[]' onchange='updateOrderStatus()'>";
-							if ($row['orderStatus'] == 'processing'){
-								echo "<option value='processing' selected='selected'>Processing</option>";
-							}else{echo "<option value='processing'>Processing</option>";}
+							if ($row['orderStatus'] == 'pending'){
+								echo "<option value='pending' selected='selected'>Pending</option>";
+							}else{echo "<option value='pending'>Pending</option>";}
 							if ($row['orderStatus'] == 'ongoing'){
 								echo "<option value='ongoing' selected='selected'>Ongoing</option>";
 							}else{echo "<option value='ongoing'>Ongoing</option>";}
