@@ -100,7 +100,7 @@ require_once '../../includes/database.inc.php';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
-                echo '<div class="modal"></div>'; // Don't remove this line
+                echo '<div class="modal"></div>'; // DON'T REMOVE THIS LINE PLEASE
             }
             } else {
                 echo "<p>No items match the filter criteria.</p>";

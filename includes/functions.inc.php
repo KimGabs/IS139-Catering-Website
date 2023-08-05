@@ -200,7 +200,7 @@ function uploadProductImage($file) {
     
     $uploadDir = "../../img/products/";
     $uploadPath = $uploadDir . $uniqueFilename;
-    // Return path to saved image
+
     return $uploadPath;
   }
 
@@ -224,58 +224,6 @@ function addProduct($conn, $productName, $productDesc, $productCatergory, $produ
     return;
 }
 
-// Update a product quantity in the cart page
-function updateQuantity($conn, $cartId, $quantity, $prodId){
-
-// Sanitize inputs to prevent SQL injection
-$cartId = mysqli_real_escape_string($conn, $cartId);
-$prodId = mysqli_real_escape_string($conn, $prodId);
-$quantity = mysqli_real_escape_string($conn, $quantity);
-
-// Check if the product exists in the cart table
-$sql = "SELECT * FROM cart WHERE cartId='$cartId' AND prodId='$prodId'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-
-// // Check the quantity of the product in the 'products' table
-$query = "SELECT * FROM products WHERE prodId='$prodId'";
-$result = mysqli_query($conn, $query);
-$row_2 = mysqli_fetch_assoc($result);
-
-if ($quantity > $row['quantity']) {
-    $qty= $quantity - $row['quantity'];
-    $newProdQty = $row_2['prodQty'] - $qty;
-    // Update the quantity of the product in the 'products' table
-    $query = "UPDATE products SET prodQty='$newProdQty' WHERE prodId='$prodId'";
-    if (!mysqli_query($conn, $query)) {
-        header("location: ../PHP/public/products.php?QuantityUpdateFailed");
-        exit();
-    }
-}else if ($quantity < $row['quantity']) {
-    $qty= $row['quantity'] - $quantity;
-    $newProdQty = $row_2['prodQty'] + $qty;
-    $query = "UPDATE products SET prodQty='$newProdQty' WHERE prodId='$prodId'";
-    if (!mysqli_query($conn, $query)) {
-        header("location: ../PHP/public/products.php?error=QuantityUpdateFailed");
-        exit();
-    }
-}
-
-if ($row) {
-    // Update the quantity of the product in the cart table
-    $sql = "UPDATE cart SET quantity='$quantity' WHERE cartId='$cartId' AND prodId='$prodId'";
-    if (mysqli_query($conn, $sql)) {
-        header("location: ../PHP/public/cart.php?QuantityUpdateSuccess");
-        exit();
-    }
-} else {
-    header("location: ../PHP/public/cart.php?error=prodNotFound");
-    exit(); // Product not found in cart table
-}
-
-mysqli_close($conn);
-}
-
 // Remove Product/Item from cart
 function removeFromCart($pkgId, $cart) {
     
@@ -291,7 +239,6 @@ function removeFromCart($pkgId, $cart) {
     exit();
     
 }
-
 
 function editPackageMethod($pkgId){
 
@@ -369,8 +316,8 @@ function updateOrderItem($conn, $name, $cart){
     $pkg_count = 0;
     foreach ($cart as $pkg) {
         $pkg_count++;
-        $prodPrice = 0; // Initialize the $prodPrice outside the loop
-        $pax = 0; // Initialize the $pax outside the loop
+        $prodPrice = 0;
+        $pax = 0;
         $pkgTotal = 0;
         $ricePrice = 0;
         foreach ($pkg as $item) {
@@ -417,7 +364,7 @@ function updateOrderItem($conn, $name, $cart){
         
     }
     $emptyCart = [];
-    // setcookie('cart', json_encode($emptyCart), time() + (86400 * 30), '/'); // Set the cookie to expire in 30 days
+    setcookie('cart', json_encode($emptyCart), time() + (86400 * 30), '/'); // Clear cookie after submission
     return;
 }
 
@@ -430,32 +377,6 @@ function emptyAddress($contactNo, $address, $postal, $city){
         $result = false;
     }
     return $result;
-}
-
-function fillOrder($conn, $usersID, $address, $postal, $city, $contactNo){
-    $stmt = $conn->prepare("UPDATE orders SET shippingAddress = ?, postal = ?, city = ?, 
-    contactNo = ? WHERE usersId= ? AND orderStatus='pending'");
-    $stmt->bind_param("ssssi",  $address, $postal, $city, $contactNo, $usersID);
-    $stmt->execute();
-    $stmt->close();
-    return;
-}
-
-function promotePendingStatus($conn, $usersID, $orderid){
-    
-    $stmt = $conn->prepare("SELECT orderStatus FROM orders WHERE usersId=? AND orderId=?");
-    $stmt->bind_param("ii", $usersID, $orderid);
-    $stmt->execute();
-    $result1 = $stmt->get_result();
-    $row = $result1->fetch_assoc();
-
-    if($row['orderStatus'] == 'pending'){
-        $stmt = $conn->prepare("UPDATE orders SET orderStatus = 'processing' WHERE usersID = ? AND orderId = ?");
-        $stmt->bind_param("ii", $usersID, $orderid);
-        $stmt->execute();   
-        $stmt->close();   
-        return;
-    }
 }
 
 function checkOrderStatusExist($conn, $orderid, $status) {

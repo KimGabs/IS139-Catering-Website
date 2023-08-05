@@ -32,13 +32,6 @@
 
             removeFromCart($pkgId, $cart);
         }
-        else if (isset($_POST["qty"])) {
-            $quantity = $_POST["qty"];
-            $prodId = $_POST["prodId"];
-            $cartId = $_POST["cartId"];
-            
-            updateQuantity($conn, $cartId, $quantity, $prodId);
-        }
         else{
             header("location: ../PHP/public/cart.php?error=stmtFailedCart-1");
             exit();    

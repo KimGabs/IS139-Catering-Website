@@ -12,8 +12,6 @@ body {
     position: relative;
     margin: 120px auto;
     background: #52A0FD;
-    /* background: -moz-linear-gradient(right,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%); */
-    /* background: -webkit-linear-gradient(right,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%); */
     background: linear-gradient(to right, #ffffff, #f1f1f1); 
     border-radius: 3px;
     box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -37,15 +35,12 @@ body {
 .event-card {
     padding: 20px 0;
     width: 525px;
-    /* margin-right: 14px; */
     margin: 20px 14px 20px 0px;
     display: block;
     background: #fff;
     border-left: 10px solid #52A0FD;
     border-radius: 3px;
     box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    -moz-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    -webkit-box-shadow: 3px 8px 16px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 .event-count, .event-name, .event-order, .event-timeSched, .event-cancelled, .event-completed, .event-processing {
     display: inline;
@@ -111,13 +106,9 @@ body {
 /* Calendar Header */
 .year-header { 
     background: #f2c42c;
-    background: -moz-linear-gradient(to right,  #face3d 0%, #fac721 80%, #ffc505 100%);
-    background: -webkit-linear-gradient(to right,  #face3d 0%, #fac721 80%, #ffc505 100%);
     background: linear-gradient(to right,  #ffcb1f 0%, #fac721 80%, #ffc505 100%);    
     font-family: Helvetica;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     height: 40px; 
     text-align: center;
     position: relative; 
@@ -137,15 +128,11 @@ body {
 } 
 .left-button { 
     left:0; 
-    -webkit-border-top-left-radius: 5px; 
-    -moz-border-radius-topleft: 5px; 
     border-top-left-radius: 5px; 
 } 
 .right-button { 
     right:0; 
     top:0; 
-    -webkit-border-top-right-radius: 5px; 
-    -moz-border-radius-topright: 5px; 
     border-top-right-radius: 5px; 
 } 
 .left-button:hover {
@@ -170,15 +157,11 @@ body {
     border: none;
     box-shadow: -1px 10px 20px #9BC6FD;
     background: #52A0FD;
-    background: -moz-linear-gradient(left,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
-    background: -webkit-linear-gradient(left,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
     background: linear-gradient(to right,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
 }
 #cancel-button {
     box-shadow: -1px 10px 20px #FF7DAE;
     background: #FF1744;
-    background: -moz-linear-gradient(left,  #FF1744 0%, #FF5D95 80%, #FF5D95 100%);
-    background: -webkit-linear-gradient(left,  #FF1744 0%, #FF5D95 80%, #FF5D95 100%);
     background: linear-gradient(to right,  #FF1744 0%, #FF5D95 80%, #FF5D95 100%);
 }
 #add-button {
@@ -319,8 +302,6 @@ body {
         width: 370px;
         height: 100%;
         background: #52A0FD;
-        background: -moz-linear-gradient(left,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
-        background: -webkit-linear-gradient(left,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);
         background: linear-gradient(to right,  #52A0FD 0%, #00C9FB 80%, #00C9FB 100%);  
     }
     .dialog {
@@ -349,8 +330,6 @@ body {
         left: 0;
         border-radius: 3px;
         box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-        -moz-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-        -webkit-box-shadow: 3px 8px 16px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     }
 }
 

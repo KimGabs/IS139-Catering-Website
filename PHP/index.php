@@ -5,7 +5,6 @@ require_once '../includes/database.inc.php';
 <main class='homepage'>
 <section class='top'>
 		<div class='home-header'>
-			<!-- <a href="public/products.php"><img src="../img/cover-1.png" alt="Banner"></a> -->
 			<div id="carousel-top" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
 					<li data-target="#carousel-top" data-slide-to="0" class="active"></li>
@@ -102,7 +101,7 @@ require_once '../includes/database.inc.php';
             <blockquote>
                <p class="testimonial-p">CROMS Catering was a revelation at our company event! Delicious, healthy food, fantastic service, and a team that embodies professionalism and care for the environment. Thoroughly impressed!</p>
             </blockquote>
-         </div><!--testimonial-text-->
+		</div><!--testimonial-text-->
       </div><!--testi-text-row-->
       <div class="row name-small-row" style="margin: 0 auto;">
          <div class="col-md-6 col-sm-12 name-small"><a href="https://www.galzivfilm.com/">Gal Ziv / CEO</a></div>

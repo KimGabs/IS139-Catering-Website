@@ -1,3 +1,5 @@
+console.log("Hello, eventCalendar.js is running!");
+
 // Setup the calendar with the current date
 $(document).ready(function(){
     var date = new Date();

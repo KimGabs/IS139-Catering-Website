@@ -1,13 +1,4 @@
 </body>
-<!-- <footer>
-	<div class="row footer" style="margin-top: 20px;">
-		<div class="col"><a href="../public/others/aboutUs.php">About Us</a></div>
-		<div class="col"><a href="../public/others/termsAndCondition.php">Terms & Condition</a></div>
-	</div>
-	<div class="row footer" style="margin-top: 10px;">
-		<div class="col"><p>&copy; CROMS Catering Service</p></div>
-	</div>
-</footer> -->
 </html>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
